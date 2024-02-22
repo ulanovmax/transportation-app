@@ -47,9 +47,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import AppButton from "@/components/base/button/AppButton.vue";
-import AppInput from "@/components/base/input/AppInput.vue";
-import AppLogo from "@/components/base/logo/AppLogo.vue";
+import AppButton from "@/components/base/AppButton.vue";
+import AppInput from "@/components/base/AppInput.vue";
+import AppLogo from "@/components/base/AppLogo.vue";
 
 const state = ref({
 	email: "",

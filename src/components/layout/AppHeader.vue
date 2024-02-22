@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import AppLogo from "@/components/base/logo/AppLogo.vue";
+import AppLogo from "@/components/base/AppLogo.vue";
 </script>
 
 <style scoped lang="postcss">

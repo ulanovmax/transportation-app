@@ -10,6 +10,7 @@
 			'hover:bg-blue-700': !disabled,
 			'bg-green-500 hover:bg-green-600': variant === 'success',
 		}"
+		@click="emits('click')"
 	>
 		<slot></slot>
 		<component
@@ -33,6 +34,12 @@ interface Props {
 	size?: "sm" | "lg";
 	icon?: Component;
 }
+
+interface Emits {
+	(e: "click"): void;
+}
+
+const emits = defineEmits<Emits>();
 
 withDefaults(defineProps<Props>(), {
 	type: "button",
