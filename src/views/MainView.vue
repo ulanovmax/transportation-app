@@ -1,7 +1,15 @@
-<script setup lang="ts"></script>
-
 <template>
-	<h1>Hello</h1>
+	<app-header class="mb-10" />
+
+	<main>
+		<div class="container">
+			<router-view></router-view>
+		</div>
+	</main>
 </template>
+
+<script setup lang="ts">
+import AppHeader from "@/components/layout/AppHeader.vue";
+</script>
 
 <style scoped lang="postcss"></style>

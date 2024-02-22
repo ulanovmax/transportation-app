@@ -2,7 +2,7 @@
 	<main>
 		<div class="flex min-h-screen w-full">
 			<div class="w-1/2 flex-grow py-8">
-				<div class="container px-5">
+				<div class="container">
 					<app-logo class="mb-20" />
 
 					<form class="mx-auto max-w-xl">

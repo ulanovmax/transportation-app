@@ -15,23 +15,5 @@ window.addEventListener("resize", () => calcVh());
 </script>
 
 <style lang="postcss">
-body {
-	font-family: "Inter", sans-serif;
-	font-weight: 400;
-}
-
-a,
-span,
-label {
-	display: inline-block;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-weight: 700;
-}
+@import "./assets/postcss/style.pcss";
 </style>

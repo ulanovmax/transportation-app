@@ -2,27 +2,41 @@
 	<button
 		:disabled="disabled"
 		:type="type"
-		class="rounded-md bg-blue-500 px-3 py-2.5 text-lg font-semibold text-white transition"
+		class="flex items-center gap-3 rounded-md bg-blue-500 font-semibold text-white transition"
 		:class="{
+			'px-3 py-2.5 text-lg': size === 'lg',
+			'gap-2 p-2 text-sm': size === 'sm',
 			'opacity-60': disabled,
 			'hover:bg-blue-700': !disabled,
+			'bg-green-500 hover:bg-green-600': variant === 'success',
 		}"
 	>
 		<slot></slot>
+		<component
+			:is="icon"
+			v-if="icon"
+			:class="{
+				'h-5 w-5': size === 'sm',
+			}"
+		/>
 	</button>
 </template>
 
 <script setup lang="ts">
+import type { Component } from "vue";
+
 interface Props {
 	type?: string;
 	loading?: boolean;
 	disabled?: boolean;
 	variant?: "secondary" | "error" | "success";
-	size?: "sm" | "xs";
+	size?: "sm" | "lg";
+	icon?: Component;
 }
 
 withDefaults(defineProps<Props>(), {
 	type: "button",
+	size: "lg",
 });
 </script>
 
