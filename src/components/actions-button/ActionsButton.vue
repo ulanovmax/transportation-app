@@ -36,6 +36,8 @@ import { IconDots } from "@tabler/icons-vue";
 import type { ActionOption } from "@/components/actions-button/types";
 import AppButton from "@/components/base/AppButton.vue";
 
+import { useClickEvent } from "@/composables/useClickEvent.ts";
+
 interface Props {
 	options: ActionOption[];
 }
@@ -50,14 +52,10 @@ const clickAction = (callback: () => void) => {
 	isDropdownShow.value = false;
 };
 
-function setClickEvent(e: Event) {
-	if (
-		(e.target as HTMLDivElement) !== actionsContainer.value &&
-		!actionsContainer.value?.contains(e.target as Node)
-	) {
+const setClickEvent = (e: Event) =>
+	useClickEvent(e, actionsContainer.value, () => {
 		isDropdownShow.value = false;
-	}
-}
+	});
 
 onMounted(() => {
 	document.addEventListener("click", setClickEvent);

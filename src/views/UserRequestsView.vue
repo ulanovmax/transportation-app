@@ -2,9 +2,11 @@
 	<div class="mb-10">
 		<h1 class="mb-5 text-xl text-slate-900">Your requests</h1>
 
-		<app-button size="sm" variant="success" :icon="IconPlus">
-			Add new
-		</app-button>
+		<router-link :to="{ name: 'createRequest', params: { id: user.id } }">
+			<app-button size="sm" variant="success" :icon="IconPlus">
+				Add new
+			</app-button>
+		</router-link>
 	</div>
 
 	<div class="grid grid-cols-2 gap-5">
@@ -33,6 +35,10 @@ import { IconPlus } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
 import RequestCard from "@/components/cards/RequestCard.vue";
+
+import { useUserStore } from "@/store/user.store.ts";
+
+const { user } = useUserStore();
 </script>
 
 <style scoped lang="postcss"></style>

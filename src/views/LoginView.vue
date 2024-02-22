@@ -57,8 +57,8 @@
 import { useRouter } from "vue-router";
 
 import AppButton from "@/components/base/AppButton.vue";
-import AppInput from "@/components/base/AppInput.vue";
 import AppLogo from "@/components/base/AppLogo.vue";
+import AppInput from "@/components/base/input/AppInput.vue";
 
 import { useUserStore } from "@/store/user.store.ts";
 

@@ -10,7 +10,7 @@
 			</div>
 		</div>
 
-		<nav class="bordered pt-6 shadow-md">
+		<nav v-if="!route.meta.isCreate" class="bordered pt-6 shadow-md">
 			<div class="container">
 				<ul class="flex gap-4">
 					<router-link
@@ -30,6 +30,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from "vue-router";
 import { IconLogout } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
@@ -38,6 +39,8 @@ import AppLogo from "@/components/base/AppLogo.vue";
 import { useUserStore } from "@/store/user.store.ts";
 
 const { logout, user } = useUserStore();
+
+const route = useRoute();
 </script>
 
 <style scoped lang="postcss">
