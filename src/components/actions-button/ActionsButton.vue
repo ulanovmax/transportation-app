@@ -11,7 +11,7 @@
 
 		<div
 			v-show="isDropdownShow"
-			class="bordered slide-up absolute left-0 top-full overflow-hidden rounded-md bg-white"
+			class="bordered slide-down absolute left-0 top-full overflow-hidden rounded-md bg-white"
 		>
 			<ul>
 				<li

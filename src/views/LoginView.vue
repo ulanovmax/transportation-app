@@ -6,29 +6,38 @@
 					<app-logo class="mb-20" />
 
 					<form class="mx-auto max-w-xl">
-						<h1 class="mb-5 text-2xl">Sign up</h1>
+						<div class="mb-5">
+							<h1 class="mb-2 text-2xl">
+								Welcome to the Transportation 👋
+							</h1>
+							<p>Please tell me your name</p>
+						</div>
 
 						<div class="flex flex-col gap-5">
 							<app-input
-								v-model="state.email"
-								label="Email"
-								placeholder="example@cloud.com"
+								v-model="user.name"
+								label="Name"
+								placeholder="Will Smith"
 							/>
 
 							<app-input
-								v-model="state.password"
-								label="Password"
-								placeholder="********"
-								type="password"
+								v-model.number="user.id"
+								label="Id"
+								placeholder="12345"
 							/>
 
-							<app-button> Sign up </app-button>
+							<app-button
+								class="justify-center"
+								@click="onSubmit"
+							>
+								Sign up
+							</app-button>
 						</div>
 					</form>
 				</div>
 			</div>
 
-			<div class="relative w-full max-w-4xl flex-grow bg-blue-600">
+			<div class="relative w-1/3 flex-grow bg-blue-600">
 				<img
 					src="@public/login-bg.jpg"
 					class="absolute right-0 top-0 h-full w-full object-cover"
@@ -45,16 +54,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 import AppButton from "@/components/base/AppButton.vue";
 import AppInput from "@/components/base/AppInput.vue";
 import AppLogo from "@/components/base/AppLogo.vue";
 
-const state = ref({
-	email: "",
-	password: "",
-});
+import { useUserStore } from "@/store/user.store.ts";
+
+const { user } = useUserStore();
+
+const router = useRouter();
+
+const onSubmit = () => {
+	void router.replace({ name: "userRequests", params: { id: user.id } });
+};
 </script>
 
 <style scoped lang="postcss"></style>

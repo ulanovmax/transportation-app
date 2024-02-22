@@ -1,5 +1,7 @@
 import allRequestsRoute from "@/router/routes/all-requests.route.ts";
+import createRequestRoute from "@/router/routes/create-request.route.ts";
 import userRequestsRoute from "@/router/routes/user-requests.route.ts";
+import { useUserStore } from "@/store/user.store.ts";
 
 export default {
 	path: "/",
@@ -7,8 +9,14 @@ export default {
 	component: () => import("@/views/MainView.vue"),
 
 	redirect: () => {
-		return { name: "userRequests", params: { id: 1 } };
+		const { user } = useUserStore();
+
+		if (user.id) {
+			return { name: "userRequests", params: { id: user.id } };
+		}
+
+		return false;
 	},
 
-	children: [userRequestsRoute, allRequestsRoute],
+	children: [...userRequestsRoute, allRequestsRoute, createRequestRoute],
 };

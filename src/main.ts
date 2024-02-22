@@ -21,7 +21,7 @@ pinia.use(piniaPluginPersistedState);
 import router from "@/router";
 
 createApp(App)
-	.use(router)
 	.use(pinia)
+	.use(router)
 	.use(Toast, { pauseOnHover: false, position: "bottom-right" })
 	.mount("#app");

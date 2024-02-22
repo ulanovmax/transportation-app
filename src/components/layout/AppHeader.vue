@@ -3,6 +3,10 @@
 		<div class="bordered py-4">
 			<div class="container flex items-center justify-between">
 				<app-logo />
+
+				<app-button :icon="IconLogout" size="sm" @click="logout">
+					Logout
+				</app-button>
 			</div>
 		</div>
 
@@ -11,7 +15,7 @@
 				<ul class="flex gap-4">
 					<router-link
 						class="link"
-						:to="{ name: 'userRequests', params: { id: 1 } }"
+						:to="{ name: 'userRequests', params: { id: user.id } }"
 					>
 						Dashboard
 					</router-link>
@@ -26,7 +30,14 @@
 </template>
 
 <script setup lang="ts">
+import { IconLogout } from "@tabler/icons-vue";
+
+import AppButton from "@/components/base/AppButton.vue";
 import AppLogo from "@/components/base/AppLogo.vue";
+
+import { useUserStore } from "@/store/user.store.ts";
+
+const { logout, user } = useUserStore();
 </script>
 
 <style scoped lang="postcss">
