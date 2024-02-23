@@ -2,6 +2,7 @@
 	<div>
 		<label v-if="label" class="mb-2 text-base font-semibold">
 			{{ label }}
+			<span v-if="required" class="text-red-500">*</span>
 		</label>
 
 		<div class="relative">
@@ -20,6 +21,7 @@
 				:placeholder="placeholder"
 				:class="{
 					'!pl-10': icon,
+					'!border-red-400': error,
 				}"
 				class="input"
 				@input="onInput($event)"
@@ -28,6 +30,10 @@
 
 			<dots-loader v-if="loading" class="icon right-4" />
 		</div>
+
+		<p v-show="error" class="error mt-2 text-red-500 transition">
+			{{ error }}
+		</p>
 	</div>
 </template>
 
@@ -46,7 +52,7 @@ const props = withDefaults(defineProps<InputProps>(), {
 });
 
 // Debounced update
-const debounceInputUpdate = useDebounce((value) => {
+const debounceInputUpdate = useDebounce((value: string) => {
 	emits("update:modelValue", value);
 }, props.searchDelay);
 
@@ -64,5 +70,19 @@ const onInput = (e: Event) => {
 <style scoped lang="postcss">
 .icon {
 	@apply pointer-events-none absolute top-1/2 -translate-y-1/2;
+}
+
+.error {
+	animation: show 0.3s ease;
+}
+
+@keyframes show {
+	0% {
+		transform: translateY(-10px);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
 }
 </style>

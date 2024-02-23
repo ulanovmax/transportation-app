@@ -9,6 +9,8 @@ export interface InputProps {
 	label?: string;
 	loading?: boolean;
 	icon?: Component;
+	error?: string;
+	required?: boolean;
 }
 
 export interface InputEmits {

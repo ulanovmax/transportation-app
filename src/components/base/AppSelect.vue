@@ -2,6 +2,7 @@
 	<div class="">
 		<label v-if="label" class="mb-2 text-base font-semibold">
 			{{ label }}
+			<span v-if="required" class="text-red-500">*</span>
 		</label>
 
 		<select class="input" @change="onChange">
@@ -17,6 +18,7 @@ interface Props {
 	modelValue: string;
 	options: Array<string | number>;
 	label?: string;
+	required?: boolean;
 }
 
 interface Emits {

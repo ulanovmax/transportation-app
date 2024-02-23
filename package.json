@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@tabler/icons-vue": "^2.47.0",
+    "@vee-validate/yup": "^4.12.5",
     "axios": "^1.6.7",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "scroll-lock": "^2.1.5",
+    "vee-validate": "^4.12.5",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0",
     "vue-toastification": "2.0.0-rc.5",

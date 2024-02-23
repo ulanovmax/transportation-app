@@ -2,8 +2,8 @@
 	<back-link />
 
 	<div class="mb-10 text-center">
-		<h1 class="mb-4 text-2xl">Create request</h1>
-		<p class="text-lg">Choose type of your request</p>
+		<h1 class="mb-4 text-2xl">Let's create your request!</h1>
+		<p class="text-lg">Choose type of your request 👇</p>
 	</div>
 
 	<div class="flex justify-center gap-5">
@@ -24,8 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { IconArrowNarrowLeft } from "@tabler/icons-vue";
-
 import BackLink from "@/components/base/BackLink.vue";
 import RequestTypeLink from "@/components/cards/RequestTypeLink.vue";
 

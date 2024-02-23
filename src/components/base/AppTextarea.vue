@@ -2,6 +2,7 @@
 	<div>
 		<label v-if="label" class="mb-2 text-base font-semibold">
 			{{ label }}
+			<span v-if="required" class="text-red-500">*</span>
 		</label>
 
 		<div class="relative">
@@ -24,7 +25,9 @@ import type { InputEmits, InputProps } from "@/components/base/input/types";
 
 const emits = defineEmits<InputEmits>();
 
-defineProps<Pick<InputProps, "placeholder" | "label" | "modelValue">>();
+defineProps<
+	Pick<InputProps, "placeholder" | "label" | "modelValue" | "required">
+>();
 
 const textareaElement = ref<HTMLTextAreaElement | null>(null);
 let initialTextareaHeight = 0;
