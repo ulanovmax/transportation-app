@@ -2,8 +2,9 @@
 	<button
 		:disabled="disabled"
 		:type="type"
-		class="flex items-center gap-3 rounded-md bg-blue-500 font-semibold text-white transition"
+		class="flex items-center gap-3 rounded-md font-semibold text-white transition"
 		:class="{
+			'bg-blue-500': variant === 'default',
 			'px-3 py-2 text-lg': size === 'lg',
 			'gap-2 p-2 text-sm': size === 'sm',
 			'opacity-60': disabled,
@@ -27,10 +28,10 @@
 import type { Component } from "vue";
 
 interface Props {
-	type?: string;
+	type?: "button" | "reset" | "submit";
 	loading?: boolean;
 	disabled?: boolean;
-	variant?: "secondary" | "error" | "success";
+	variant?: "secondary" | "error" | "success" | "default";
 	size?: "sm" | "lg";
 	icon?: Component;
 }
@@ -44,6 +45,7 @@ const emits = defineEmits<Emits>();
 withDefaults(defineProps<Props>(), {
 	type: "button",
 	size: "lg",
+	variant: "default",
 });
 </script>
 

@@ -1,65 +1,108 @@
 <template>
 	<div class="rounded-lg bg-white shadow-lg">
-		<div class="relative">
+		<div class="relative flex h-full flex-col">
 			<div
+				:class="{
+					'bg-green-500': !editable,
+				}"
 				class="flex items-center justify-between gap-4 rounded-t-lg bg-blue-500 p-3 text-white"
 			>
 				<div class="flex items-center gap-4">
 					<h3 class="text-lg">
-						{{ fromCity }}
+						{{ data.fromCity }}
 					</h3>
 
 					<icon-truck-delivery />
 
 					<h3 class="text-lg">
-						{{ toCity }}
+						{{ data.toCity }}
 					</h3>
 				</div>
 
 				<div class="flex gap-3">
-					<app-badge class="capitalize">
-						{{ type }}
+					<app-badge
+						:class="{
+							'bg-green-600': !editable,
+						}"
+						class="capitalize"
+					>
+						{{ data.type }}
 					</app-badge>
 
-					<actions-button :options="options" />
+					<actions-button v-if="editable" :options="options" />
 				</div>
 			</div>
 
-			<div class="relative overflow-hidden p-3 pt-5">
+			<div
+				class="relative flex flex-grow flex-col overflow-hidden p-3 pt-5"
+			>
 				<ul class="mb-5 space-y-3">
+					<li
+						v-if="data.user && !editable"
+						class="flex items-center gap-2 text-base font-medium"
+					>
+						<icon-user
+							:size="20"
+							class="text-slate-800 opacity-50"
+						/>
+
+						{{ data.user.name }}
+					</li>
+
 					<li class="flex items-center gap-2 text-base font-medium">
 						<icon-calendar-event
 							:size="20"
 							class="text-slate-800 opacity-50"
 						/>
-						{{ date }}
+						{{ data.date }}
 					</li>
 
-					<li class="flex items-center gap-2 text-base font-medium">
+					<li
+						v-if="data.type === RequestTypeEnums.Order"
+						class="flex items-center gap-2 text-base font-medium"
+					>
 						<icon-category
 							:size="20"
 							class="text-slate-800 opacity-50"
 						/>
-						{{ category }}
+						{{ data.category }}
+					</li>
+
+					<li class="flex items-center gap-2 text-base font-medium">
+						<icon-users-group
+							:size="20"
+							class="text-slate-800 opacity-50"
+						/>
+
+						{{ matches }} matching requests
 					</li>
 				</ul>
 
-				<p class="break-words text-base opacity-80">
-					{{ description ?? "No description" }}
+				<p
+					v-if="data.type === RequestTypeEnums.Order"
+					class="description mb-5 break-words text-base opacity-80"
+				>
+					{{ data.description ? data.description : "No description" }}
 				</p>
 
-				<div class="mt-5 flex gap-3">
-					<app-button size="sm"> Show more </app-button>
+				<div class="mt-auto flex gap-3">
+					<app-button
+						:variant="!editable ? 'success' : 'default'"
+						size="sm"
+						@click="emits('click')"
+					>
+						{{ editable ? "Show more" : "Apply" }}
+					</app-button>
 				</div>
 
 				<!-- Background Icon -->
 				<icon-box-seam
-					v-if="type === RequestTypeEnums.Order"
+					v-if="data.type === RequestTypeEnums.Order"
 					class="icon"
 				/>
 
 				<icon-truck-delivery
-					v-else-if="type === RequestTypeEnums.Delivery"
+					v-else-if="data.type === RequestTypeEnums.Delivery"
 					class="icon"
 				/>
 			</div>
@@ -75,9 +118,15 @@ import {
 	IconEdit,
 	IconTrash,
 	IconTruckDelivery,
+	IconUser,
+	IconUsersGroup,
 } from "@tabler/icons-vue";
 
-import ActionsButton from "@/components/actions-button/ActionsButton.vue";
+const ActionsButton = defineAsyncComponent(
+	() => import("@/components/actions-button/ActionsButton.vue")
+);
+import { defineAsyncComponent } from "vue";
+
 import type { ActionOption } from "@/components/actions-button/types";
 import AppBadge from "@/components/base/AppBadge.vue";
 import AppButton from "@/components/base/AppButton.vue";
@@ -86,7 +135,21 @@ import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
 import type { IRequestCard } from "@/ts/types/requests";
 
-defineProps<IRequestCard>();
+interface Props {
+	data: IRequestCard;
+	matches?: number;
+	editable?: boolean;
+}
+
+interface Emits {
+	(e: "click"): void;
+}
+
+const emits = defineEmits<Emits>();
+
+withDefaults(defineProps<Props>(), {
+	matches: 0,
+});
 
 const options: ActionOption[] = [
 	{
@@ -108,6 +171,26 @@ const options: ActionOption[] = [
 
 <style scoped lang="postcss">
 .icon {
-	@apply pointer-events-none absolute -right-20 -top-20 h-96 w-96 opacity-15;
+	pointer-events: none;
+	position: absolute;
+	top: -40%;
+	height: 170%;
+	width: 50%;
+	right: -10%;
+	opacity: 0.15;
+}
+
+.description {
+	overflow-y: auto;
+	max-height: 98px;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: rgba(15, 23, 42, 0.5);
+		border-radius: 10px;
+	}
 }
 </style>

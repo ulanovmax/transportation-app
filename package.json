@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fancyapps/ui": "^5.0.33",
     "@tabler/icons-vue": "^2.47.0",
     "@vee-validate/yup": "^4.12.5",
     "axios": "^1.6.7",
