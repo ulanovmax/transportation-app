@@ -4,7 +4,7 @@ import type { IUser } from "@/ts/types/users";
 
 interface IRequest {
 	user: IUser;
-	id: number;
+	id: string;
 	fromCity: string;
 	toCity: string;
 	type: RequestTypeEnums;

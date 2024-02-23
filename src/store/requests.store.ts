@@ -1,4 +1,4 @@
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
 import { defineStore } from "pinia";
 
@@ -9,20 +9,24 @@ export const useRequestsStore = defineStore(
 	"requests",
 	() => {
 		const requestsList = ref<IRequest[]>([]);
-		const usersList = reactive<IUser[]>([]);
+		const usersList = ref<IUser[]>([]);
 
 		const isUserExist = (id: number | string) =>
-			usersList.find((item) => item.id === id);
+			usersList.value.find((item) => item.id === id);
+
+		const isRequestExist = (id: number | string) =>
+			requestsList.value.find((item) => item.id === id);
 
 		return {
 			requestsList,
 			usersList,
 			isUserExist,
+			isRequestExist,
 		};
 	},
 	{
 		persist: {
-			paths: ["usersList"],
+			paths: ["usersList", "requestsList"],
 		},
 	}
 );

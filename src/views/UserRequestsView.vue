@@ -34,15 +34,17 @@
 		</button>
 	</form>
 
-	<div class="">
-		<template v-if="data.length > 0">
-			<div class="grid grid-cols-2 gap-5">
+	<div>
+		<h3 class="mb-4 text-lg">Your requests</h3>
+
+		<template v-if="userRequests.length > 0">
+			<div class="grid auto-rows-fr grid-cols-2 gap-5">
 				<request-card
-					v-for="card in data"
+					v-for="card in userRequests"
 					:key="card.id"
 					editable
 					:data="card"
-					@click="isPopupOpen = true"
+					@select="select"
 				/>
 			</div>
 		</template>
@@ -50,100 +52,32 @@
 		<not-found v-else msg="You have no requests yet" />
 	</div>
 
-	<app-modal v-model="isPopupOpen">
-		<template #header>
-			<div class="flex items-center gap-4">
-				<h3 class="text-xl">Odesa</h3>
-
-				<icon-truck-delivery />
-
-				<h3 class="text-xl">Paris</h3>
-
-				<app-badge class="capitalize text-white"> Delivery </app-badge>
-			</div>
-		</template>
-
-		<div class="mb-6">
-			<ul class="mb-5 space-y-3">
-				<li class="flex items-center gap-2 text-base font-medium">
-					<icon-calendar-event
-						:size="20"
-						class="text-slate-800 opacity-50"
-					/>
-					20.01.2024
-				</li>
-
-				<li class="flex items-center gap-2 text-base font-medium">
-					<icon-category
-						:size="20"
-						class="text-slate-800 opacity-50"
-					/>
-					Clothes
-				</li>
-			</ul>
-
-			<p class="break-words text-base opacity-80">No description</p>
-		</div>
-
-		<div class="">
-			<h3 class="mb-4 text-lg">Matching orders</h3>
-
-			<fancy-carousel
-				:carousel-options="{
-					infinite: false,
-					center: false,
-					Navigation: false,
-				}"
-			>
-				<request-card
-					v-for="i in 5"
-					:key="i"
-					class="f-carousel__slide !mr-3 !w-1/2"
-					:data="data[0]"
-				/>
-			</fancy-carousel>
-		</div>
-	</app-modal>
+	<request-modal v-model="isPopupOpen" :data="currentRequest" />
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import {
-	IconCalendarEvent,
-	IconCategory,
-	IconPlus,
-	IconTruckDelivery,
-} from "@tabler/icons-vue";
+import { IconPlus } from "@tabler/icons-vue";
 
-import AppBadge from "@/components/base/AppBadge.vue";
 import AppButton from "@/components/base/AppButton.vue";
 import AppSelect from "@/components/base/AppSelect.vue";
 import AppInput from "@/components/base/input/AppInput.vue";
 import NotFound from "@/components/base/NotFound.vue";
 import RequestCard from "@/components/cards/RequestCard.vue";
-import FancyCarousel from "@/components/carousel/FancyCarousel.vue";
-import AppModal from "@/components/modals/AppModal.vue";
+import RequestModal from "@/components/modals/RequestModal.vue";
 
+import { storeToRefs } from "pinia";
+
+import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
 import type { IRequest } from "@/ts/types/requests";
 
-const data: IRequest[] = [
-	// {
-	// 	id: 2,
-	// 	type: RequestTypeEnums.Order,
-	// 	user: {
-	// 		id: 1,
-	// 		name: "Alex",
-	// 	},
-	// 	date: "20.01.2025",
-	// 	category: "Food",
-	// 	description: "",
-	// 	fromCity: "Odesa",
-	// 	toCity: "Paris",
-	// },
-];
-
 const { user } = useUserStore();
+const { requestsList } = storeToRefs(useRequestsStore());
+
+const userRequests = computed(() =>
+	requestsList.value.filter((item) => item.user.id === user.id)
+);
 
 const date = ref("");
 const sortValue = ref("");
@@ -151,6 +85,12 @@ const sortValue = ref("");
 const isResetShow = computed(() => date.value || sortValue.value);
 
 const isPopupOpen = ref(false);
+const currentRequest = ref({});
+
+const select = (request: IRequest) => {
+	currentRequest.value = request;
+	isPopupOpen.value = true;
+};
 </script>
 
 <style scoped lang="postcss"></style>

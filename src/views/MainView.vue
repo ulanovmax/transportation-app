@@ -1,7 +1,7 @@
 <template>
 	<app-header class="mb-10" />
 
-	<main>
+	<main class="pb-10">
 		<div class="container">
 			<router-view></router-view>
 		</div>

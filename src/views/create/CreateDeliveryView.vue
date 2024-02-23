@@ -17,6 +17,7 @@
 						placeholder="From"
 						:error="errors.fromCity"
 						required
+						:reset="isReset"
 						@select="(city) => (fromCity = city)"
 					/>
 
@@ -25,6 +26,7 @@
 						placeholder="To"
 						:error="errors.toCity"
 						required
+						:reset="isReset"
 						@select="(city) => (toCity = city)"
 					/>
 
@@ -44,6 +46,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { useToast } from "vue-toastification";
 import { IconTruckDelivery } from "@tabler/icons-vue";
 import { useForm } from "vee-validate";
 import type { ObjectSchema } from "yup";
@@ -54,15 +58,30 @@ import AppInput from "@/components/base/input/AppInput.vue";
 import SearchCitiesInput from "@/components/base/SearchCitiesInput.vue";
 import CreateRequestLayout from "@/components/layout/CreateRequestLayout.vue";
 
+import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
+
+import { storeToRefs } from "pinia";
+
+import { useGeneratedID } from "@/composables/useGeneratedID.ts";
+import { useRequestsStore } from "@/store/requests.store.ts";
+import { useUserStore } from "@/store/user.store.ts";
+import type { IRequest } from "@/ts/types/requests";
+
+const { user } = useUserStore();
+const requestStore = useRequestsStore();
+const { requestsList } = storeToRefs(requestStore);
+
+const toast = useToast();
+
 interface DeliveryForm {
 	fromCity: string;
 	toCity: string;
-	date: string | Date;
+	date: string;
 }
 
 const schema: ObjectSchema<DeliveryForm> = object({
 	fromCity: string().required("Please select city"),
-	toCity: string().required("Please select date"),
+	toCity: string().required("Please select city"),
 	date: string().required("Please select date"),
 });
 
@@ -77,8 +96,31 @@ const [fromCity] = defineField("fromCity");
 const [toCity] = defineField("toCity");
 const [date] = defineField("date");
 
-const onSubmit = handleSubmit((values) => {
-	console.log(values);
+const isReset = ref(false);
+
+const onSubmit = handleSubmit((values, { resetForm }) => {
+	const dateNow = new Date().toISOString();
+	const id = useGeneratedID();
+
+	const request: IRequest = {
+		id,
+		dateCreated: dateNow,
+		toCity: values.toCity,
+		fromCity: values.fromCity,
+		dateDispatch: values.date,
+		type: RequestTypeEnums.Delivery,
+		user: {
+			id: user.id,
+			name: user.name,
+		},
+	};
+
+	requestsList.value.push(request);
+
+	toast.success("Delivery request is successfully created");
+
+	isReset.value = true;
+	resetForm();
 });
 </script>
 

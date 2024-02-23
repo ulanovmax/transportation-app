@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { IconMapPin } from "@tabler/icons-vue";
 
 import AppInput from "@/components/base/input/AppInput.vue";
@@ -59,9 +59,11 @@ interface Emits {
 }
 
 interface Props
-	extends Pick<InputProps, "placeholder" | "label" | "error" | "required"> {}
+	extends Pick<InputProps, "placeholder" | "label" | "error" | "required"> {
+	reset: boolean;
+}
 
-defineProps<Partial<Props>>();
+const props = defineProps<Partial<Props>>();
 const emits = defineEmits<Emits>();
 
 const searchValue = ref("");
@@ -74,7 +76,6 @@ const onInput = async () => {
 	if (!searchValue.value) return;
 
 	isLoading.value = true;
-	console.log(true);
 	emits("select", "");
 
 	try {
@@ -103,6 +104,13 @@ const setClickEvent = (e: Event) =>
 		isDropdownShow.value = false;
 	});
 
+watch(
+	() => props.reset,
+	(value) => {
+		if (value) searchValue.value = "";
+	}
+);
+
 onMounted(() => {
 	document.addEventListener("click", setClickEvent);
 });
@@ -114,7 +122,7 @@ onUnmounted(() => {
 
 <style scoped lang="postcss">
 .dropdown {
-	top: calc(100% + 10px);
+	top: calc(100% - 30px);
 }
 
 .dropdown__list {

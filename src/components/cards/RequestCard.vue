@@ -38,7 +38,7 @@
 							class="text-slate-800 opacity-50"
 						/>
 
-						{{ data.user.name }}
+						{{ isOwner ? "Your request" : data.user.name }}
 					</li>
 
 					<li class="flex items-center gap-2 text-base font-medium">
@@ -66,7 +66,7 @@
 							class="text-slate-800 opacity-50"
 						/>
 
-						{{ matches }} matching requests
+						{{ matchingList.length }} matching {{ requestTypeName }}
 					</li>
 				</ul>
 
@@ -78,7 +78,7 @@
 				</p>
 
 				<div class="mt-auto flex gap-3">
-					<app-button size="sm" @click="emits('click')">
+					<app-button size="sm" @click="emits('select', data)">
 						{{ editable ? "Show more" : "Apply" }}
 					</app-button>
 				</div>
@@ -99,6 +99,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed, defineAsyncComponent } from "vue";
 import {
 	IconBoxSeam,
 	IconCalendarEvent,
@@ -113,7 +114,6 @@ import {
 const ActionsButton = defineAsyncComponent(
 	() => import("@/components/actions-button/ActionsButton.vue")
 );
-import { defineAsyncComponent } from "vue";
 
 import type { ActionOption } from "@/components/actions-button/types";
 import AppBadge from "@/components/base/AppBadge.vue";
@@ -121,23 +121,33 @@ import AppButton from "@/components/base/AppButton.vue";
 
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
+import { useMatchingRequests } from "@/composables/useMatchingRequests.ts";
+import { useRequestTypeName } from "@/composables/useRequestTypeName.ts";
+import { useUserStore } from "@/store/user.store.ts";
 import type { IRequest } from "@/ts/types/requests";
 
 interface Props {
 	data: IRequest;
-	matches?: number;
 	editable?: boolean;
 }
 
 interface Emits {
-	(e: "click"): void;
+	(e: "select", value: IRequest): void;
 }
 
 const emits = defineEmits<Emits>();
 
-withDefaults(defineProps<Props>(), {
-	matches: 0,
+const props = defineProps<Props>();
+
+const { user } = useUserStore();
+
+const isOwner = computed(() => props.data.user.id === user.id);
+
+const matchingList = computed(() => {
+	return useMatchingRequests(props.data);
 });
+
+const requestTypeName = computed(() => useRequestTypeName(props.data.type));
 
 const options: ActionOption[] = [
 	{
