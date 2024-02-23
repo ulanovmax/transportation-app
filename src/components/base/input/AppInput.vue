@@ -19,6 +19,7 @@
 				:type="type"
 				:value="modelValue"
 				:placeholder="placeholder"
+				:disabled="disabled"
 				:class="{
 					'!pl-10': icon,
 					'!border-red-400': error,

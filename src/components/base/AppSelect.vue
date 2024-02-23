@@ -6,6 +6,9 @@
 		</label>
 
 		<select class="input" @change="onChange">
+			<option v-if="placeholder" class="text-slate-400">
+				{{ placeholder }}
+			</option>
 			<option v-for="item in options" :key="item" :value="item">
 				{{ item }}
 			</option>
@@ -19,19 +22,23 @@ interface Props {
 	options: Array<string | number>;
 	label?: string;
 	required?: boolean;
+	placeholder?: string;
 }
 
 interface Emits {
 	(e: "update:modelValue", value: string): void;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
 const onChange = (e: Event) => {
 	const target = e.target as HTMLSelectElement;
 
-	emits("update:modelValue", target.value);
+	emits(
+		"update:modelValue",
+		target.value === props.placeholder ? "" : target.value
+	);
 };
 </script>
 

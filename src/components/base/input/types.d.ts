@@ -11,6 +11,7 @@ export interface InputProps {
 	icon?: Component;
 	error?: string;
 	required?: boolean;
+	disabled?: boolean;
 }
 
 export interface InputEmits {

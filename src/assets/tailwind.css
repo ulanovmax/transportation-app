@@ -10,3 +10,7 @@
 .input {
     @apply w-full rounded-md border border-solid border-slate-300 px-3 py-2 text-lg transition focus:border-blue-500 focus-visible:border-blue-500
 }
+
+.container {
+    @apply mx-auto max-w-7xl px-5
+}

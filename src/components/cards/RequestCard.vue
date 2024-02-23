@@ -1,5 +1,7 @@
 <template>
-	<div class="rounded-lg bg-white shadow-lg">
+	<div
+		class="card rounded-lg bg-white shadow-lg transition-shadow hover:shadow-2xl"
+	>
 		<div class="relative flex h-full flex-col">
 			<div
 				class="flex items-center justify-between gap-4 rounded-t-lg bg-blue-500 p-3 text-white"
@@ -77,9 +79,9 @@
 					{{ data.description ? data.description : "No description" }}
 				</p>
 
-				<div class="mt-auto flex gap-3">
+				<div v-if="editable" class="mt-auto flex gap-3">
 					<app-button size="sm" @click="emits('select', data)">
-						{{ editable ? "Show more" : "Apply" }}
+						Show more
 					</app-button>
 				</div>
 
@@ -176,6 +178,8 @@ const options: ActionOption[] = [
 	width: 50%;
 	right: -10%;
 	opacity: 0.15;
+	transition: transform 0.5s ease;
+	transform: translateX(0) scaleX(-1);
 }
 
 .description {
@@ -189,6 +193,14 @@ const options: ActionOption[] = [
 	&::-webkit-scrollbar-thumb {
 		background: rgba(15, 23, 42, 0.5);
 		border-radius: 10px;
+	}
+}
+
+.card {
+	&:hover {
+		.icon {
+			transform: translateX(30%) scaleX(-1);
+		}
 	}
 }
 </style>
