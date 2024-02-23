@@ -2,9 +2,6 @@
 	<div class="rounded-lg bg-white shadow-lg">
 		<div class="relative flex h-full flex-col">
 			<div
-				:class="{
-					'bg-green-500': !editable,
-				}"
 				class="flex items-center justify-between gap-4 rounded-t-lg bg-blue-500 p-3 text-white"
 			>
 				<div class="flex items-center gap-4">
@@ -20,12 +17,7 @@
 				</div>
 
 				<div class="flex gap-3">
-					<app-badge
-						:class="{
-							'bg-green-600': !editable,
-						}"
-						class="capitalize"
-					>
+					<app-badge class="capitalize">
 						{{ data.type }}
 					</app-badge>
 
@@ -86,11 +78,7 @@
 				</p>
 
 				<div class="mt-auto flex gap-3">
-					<app-button
-						:variant="!editable ? 'success' : 'default'"
-						size="sm"
-						@click="emits('click')"
-					>
+					<app-button size="sm" @click="emits('click')">
 						{{ editable ? "Show more" : "Apply" }}
 					</app-button>
 				</div>
