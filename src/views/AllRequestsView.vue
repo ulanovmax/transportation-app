@@ -13,9 +13,9 @@ import RequestCard from "@/components/cards/RequestCard.vue";
 
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
-import type { IRequestCard } from "@/ts/types/requests";
+import type { IRequest } from "@/ts/types/requests";
 
-const data: IRequestCard[] = [
+const data: IRequest[] = [
 	{
 		id: 1,
 		type: RequestTypeEnums.Order,
@@ -24,11 +24,12 @@ const data: IRequestCard[] = [
 			name: "Maxim",
 		},
 		category: "Clothes",
-		date: "20.01.2025",
+		dateDispatch: "20.01.2025",
 		description:
 			"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur atque consequatur corporis deserunt ea iusto laudantium minima odit, perferendis perspiciatis provident quo velit voluptas. Aliquid explicabo id impedit laudantium, maxime nesciunt omnis pariatur quisquam voluptatibus. Autem dignissimos fuga ipsum iste libero maiores quibusdam sapiente! Asperiores nisi reiciendis suscipit vero. Ex!\n",
 		fromCity: "Odesa",
 		toCity: "Paris",
+		dateCreated: "20.01.2024",
 	},
 	{
 		id: 2,
@@ -37,9 +38,10 @@ const data: IRequestCard[] = [
 			id: 1,
 			name: "Alex",
 		},
-		date: "20.01.2025",
+		dateDispatch: "20.01.2025",
 		fromCity: "Odesa",
 		toCity: "Paris",
+		dateCreated: "20.01.2024",
 	},
 ];
 </script>

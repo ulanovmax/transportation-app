@@ -5,7 +5,7 @@
 				<div class="container">
 					<app-logo class="mb-20" />
 
-					<form class="mx-auto max-w-xl">
+					<div class="mx-auto max-w-xl">
 						<div class="mb-5">
 							<h1 class="mb-2 text-2xl">
 								Welcome to the Transportation 👋
@@ -13,27 +13,33 @@
 							<p>Please tell me your name</p>
 						</div>
 
-						<div class="flex flex-col gap-5">
-							<app-input
-								v-model="user.name"
-								label="Name"
-								placeholder="Will Smith"
-							/>
+						<form @submit.prevent="onSubmit">
+							<div class="flex flex-col gap-5">
+								<app-input
+									v-model="name"
+									label="Name"
+									placeholder="Will Smith"
+									:error="errors.name"
+									required
+								/>
 
-							<app-input
-								v-model.number="user.id"
-								label="Id"
-								placeholder="12345"
-							/>
+								<app-input
+									v-model.number="id"
+									label="Id"
+									:error="errors.id"
+									placeholder="12345"
+									required
+								/>
 
-							<app-button
-								class="justify-center"
-								@click="onSubmit"
-							>
-								Sign up
-							</app-button>
-						</div>
-					</form>
+								<app-button
+									class="justify-center"
+									type="submit"
+								>
+									Sign up
+								</app-button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 
@@ -55,20 +61,61 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { useForm } from "vee-validate";
+import type { ObjectSchema } from "yup";
+import { number } from "yup";
+import { object, string } from "yup";
 
 import AppButton from "@/components/base/AppButton.vue";
 import AppLogo from "@/components/base/AppLogo.vue";
 import AppInput from "@/components/base/input/AppInput.vue";
 
+import { storeToRefs } from "pinia";
+
+import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
 
-const { user } = useUserStore();
+const { user } = storeToRefs(useUserStore());
+const { usersList, isUserExist } = useRequestsStore();
 
 const router = useRouter();
 
-const onSubmit = () => {
-	void router.replace({ name: "userRequests", params: { id: user.id } });
-};
+interface LoginForm {
+	name: string;
+	id: number | string;
+}
+
+const schema: ObjectSchema<LoginForm> = object({
+	name: string().required("Please enter your name"),
+	id: number()
+		.typeError("ID must be a number")
+		.positive()
+		.required("Please enter id"),
+});
+
+const { handleSubmit, errors, defineField } = useForm<LoginForm>({
+	validationSchema: schema,
+	initialValues: {
+		name: "",
+		id: "",
+	},
+});
+
+const [name] = defineField("name");
+const [id] = defineField("id");
+
+const onSubmit = handleSubmit((values) => {
+	user.value = {
+		name: values.name,
+		id: values.id,
+	};
+
+	if (!isUserExist(values.id)) {
+		usersList.push(user.value);
+	}
+
+	void router.replace({ name: "userRequests", params: { id: values.id } });
+});
 </script>
 
 <style scoped lang="postcss"></style>

@@ -124,12 +124,10 @@ import RequestCard from "@/components/cards/RequestCard.vue";
 import FancyCarousel from "@/components/carousel/FancyCarousel.vue";
 import AppModal from "@/components/modals/AppModal.vue";
 
-import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
-
 import { useUserStore } from "@/store/user.store.ts";
-import type { IRequestCard } from "@/ts/types/requests";
+import type { IRequest } from "@/ts/types/requests";
 
-const data: IRequestCard[] = [
+const data: IRequest[] = [
 	// {
 	// 	id: 2,
 	// 	type: RequestTypeEnums.Order,

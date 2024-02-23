@@ -46,7 +46,7 @@
 							:size="20"
 							class="text-slate-800 opacity-50"
 						/>
-						{{ data.date }}
+						{{ data.dateDispatch }}
 					</li>
 
 					<li
@@ -121,10 +121,10 @@ import AppButton from "@/components/base/AppButton.vue";
 
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
-import type { IRequestCard } from "@/ts/types/requests";
+import type { IRequest } from "@/ts/types/requests";
 
 interface Props {
-	data: IRequestCard;
+	data: IRequest;
 	matches?: number;
 	editable?: boolean;
 }
