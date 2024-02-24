@@ -8,28 +8,27 @@
 
 		<router-link :to="{ name: 'createRequest', params: { id: user.id } }">
 			<app-button size="sm" variant="success" :icon="IconPlus">
-				Add new
+				Add new request
 			</app-button>
 		</router-link>
 	</div>
 
 	<filter-requests-form
-		@change="(list: IRequest[]) => (mainRequestsList = list)"
+		@change="(list: IRequest[]) => (userRequests = list)"
 	/>
 
 	<div>
-		<h3 class="mb-5 text-lg">
-			Your requests ({{ mainRequestsList.length }})
-		</h3>
+		<h3 class="mb-5 text-lg">Your requests ({{ userRequests.length }})</h3>
 
-		<template v-if="mainRequestsList.length > 0">
+		<template v-if="userRequests.length > 0">
 			<div class="grid auto-rows-fr grid-cols-2 gap-5 max-md:grid-cols-1">
 				<request-card
-					v-for="card in mainRequestsList"
+					v-for="card in userRequests"
 					:key="card.id"
 					editable
 					:data="card"
 					@select="select"
+					@delete="onDelete"
 				/>
 			</div>
 		</template>
@@ -41,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { IconPlus } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
@@ -56,22 +55,16 @@ import type { IRequest } from "@/ts/types/requests";
 
 const { user } = useUserStore();
 
-const { getUserRequests } = useRequestsStore();
+const requestsStore = useRequestsStore();
 
-const userRequests = ref(getUserRequests(user.id));
-
-const mainRequestsList = computed({
-	get() {
-		return userRequests.value;
-	},
-
-	set(list) {
-		userRequests.value = list;
-	},
-});
+const userRequests = ref(requestsStore.getUserRequests(user.id));
 
 const isPopupOpen = ref(false);
 const currentRequest = ref({});
+
+const onDelete = (id: IRequest["id"]) => {
+	userRequests.value = userRequests.value.filter((item) => item.id !== id);
+};
 
 const select = (request: IRequest) => {
 	currentRequest.value = request;

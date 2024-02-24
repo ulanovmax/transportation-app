@@ -155,6 +155,7 @@ interface Props {
 
 interface Emits {
 	(e: "select", value: IRequest): void;
+	(e: "delete", value: IRequest["id"]): void;
 }
 
 const emits = defineEmits<Emits>();
@@ -193,7 +194,7 @@ const options: ActionOption[] = [
 
 const onDelete = () => {
 	deleteRequest(props.data.id);
-
+	emits("delete", props.data.id);
 	toast.success("Request is successfully deleted");
 	isDeleteOpen.value = false;
 };

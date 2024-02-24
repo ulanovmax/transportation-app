@@ -55,7 +55,7 @@ const sortValue = ref<PeriodsEnums | "">("");
 const isResetShow = computed(() => dateDispatch.value || sortValue.value);
 
 const requestsStore = useRequestsStore();
-// const { requestsList } = storeToRefs(requestsStore);
+const { requestsList } = storeToRefs(requestsStore);
 
 const { user } = useUserStore();
 
@@ -67,7 +67,9 @@ const reset = () => {
 };
 
 const filteredRequests = computed<IRequest[]>(() => {
-	let userRequests = requestsStore.getUserRequests(user.id);
+	let userRequests = requestsList.value.filter(
+		(item) => item.user.id === user.id
+	);
 
 	if (sortValue.value) {
 		const { from, to } = useTimePeriod(sortValue.value);

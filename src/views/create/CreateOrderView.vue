@@ -1,5 +1,5 @@
 <template>
-	<create-request-layout>
+	<create-request-layout v-model="isPopupOpen">
 		<template #header>
 			<h1 class="mb-2 flex items-center gap-2 text-xl">
 				Create order
@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from "vue-toastification";
+import { ref } from "vue";
 import { IconBoxSeam } from "@tabler/icons-vue";
 
 import RequestForm from "@/components/forms/RequestForm.vue";
@@ -40,7 +40,7 @@ const requestStore = useRequestsStore();
 const { requestsList } = storeToRefs(requestStore);
 const { user } = useUserStore();
 
-const toast = useToast();
+const isPopupOpen = ref(false);
 
 const onSubmit = (values: OrderForm) => {
 	const dateNow = new Date().toISOString();
@@ -63,7 +63,7 @@ const onSubmit = (values: OrderForm) => {
 
 	requestsList.value.push(request);
 
-	toast.success("Delivery request is successfully created");
+	isPopupOpen.value = true;
 };
 </script>
 
