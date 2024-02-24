@@ -92,7 +92,7 @@ const onInput = async () => {
 };
 
 const onSelect = (city: ICity) => {
-	searchValue.value = city.name;
+	searchValue.value = `${city.name} (${city.country})`;
 
 	emits("select", searchValue.value);
 

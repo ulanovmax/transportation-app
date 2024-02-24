@@ -1,25 +1,26 @@
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
 import { useRequestsStore } from "@/store/requests.store.ts";
-import { useUserStore } from "@/store/user.store.ts";
 import type { IRequest } from "@/ts/types/requests";
 
 export const useMatchingRequests = (request: IRequest): IRequest[] => {
 	const { requestsList } = useRequestsStore();
-	const { user } = useUserStore();
 
 	return requestsList.filter((item) => {
-		const selectedRequestDate = new Date(request.dateDispatch);
-		const otherRequestDate = new Date(item.dateDispatch);
+		if (item.user.id === request.user.id) return false;
 
-		return (
-			item.user.id !== user.id &&
+		const requestDate = new Date(request.dateDispatch);
+		const itemDate = new Date(item.dateDispatch);
+
+		const cityCondition =
 			request.toCity === item.toCity &&
-			request.fromCity === item.fromCity &&
-			request.type !== item.type &&
-			(request.type === RequestTypeEnums.Delivery
-				? selectedRequestDate <= otherRequestDate
-				: selectedRequestDate >= otherRequestDate)
-		);
+			request.fromCity === item.fromCity;
+
+		const dateCondition =
+			request.type === RequestTypeEnums.Delivery
+				? requestDate <= itemDate
+				: requestDate >= itemDate;
+
+		return request.type !== item.type && cityCondition && dateCondition;
 	});
 };

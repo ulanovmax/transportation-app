@@ -1,5 +1,5 @@
 <template>
-	<form class="relative mb-10" @submit.prevent>
+	<form class="relative mb-10" @reset="reset">
 		<div class="flex gap-5">
 			<app-input
 				v-model="dateDispatch"
@@ -21,7 +21,7 @@
 		<button
 			v-show="isResetShow"
 			class="hover-link fade-down absolute top-full"
-			@click="reset"
+			type="reset"
 		>
 			Reset
 		</button>
@@ -54,7 +54,9 @@ const sortValue = ref<PeriodsEnums | "">("");
 
 const isResetShow = computed(() => dateDispatch.value || sortValue.value);
 
-const { requestsList } = storeToRefs(useRequestsStore());
+const requestsStore = useRequestsStore();
+// const { requestsList } = storeToRefs(requestsStore);
+
 const { user } = useUserStore();
 
 const reset = () => {
@@ -65,9 +67,7 @@ const reset = () => {
 };
 
 const filteredRequests = computed<IRequest[]>(() => {
-	let userRequests = requestsList.value.filter(
-		(item) => item.user.id === user.id
-	);
+	let userRequests = requestsStore.getUserRequests(user.id);
 
 	if (sortValue.value) {
 		const { from, to } = useTimePeriod(sortValue.value);
