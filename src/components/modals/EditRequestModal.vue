@@ -79,8 +79,6 @@ const onSubmit = (values: OrderForm) => {
 		updatedRequest.category = values.category;
 	}
 
-	console.log(updatedRequest);
-
 	editExistedRequest(props.data.id, updatedRequest);
 
 	toast.success("Request is successfully updated");

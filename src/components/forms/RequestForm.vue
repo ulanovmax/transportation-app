@@ -103,13 +103,18 @@ const initialValues: OrderForm = {
 const isDisabled = computed(() => {
 	if (!defaultValues) return;
 
-	return (
-		defaultValues.description === description.value &&
+	const mainCondition =
 		defaultValues.dateDispatch === dateDispatch.value &&
 		defaultValues.fromCity === fromCity.value &&
-		defaultValues.toCity === toCity.value &&
-		defaultValues.category === category.value
-	);
+		defaultValues.toCity === toCity.value;
+
+	const orderCondition =
+		defaultValues.description === description.value &&
+		defaultValues.category === category.value;
+
+	return props.type === RequestTypeEnums.Order
+		? mainCondition && orderCondition
+		: mainCondition;
 });
 
 const isReset = ref(false);

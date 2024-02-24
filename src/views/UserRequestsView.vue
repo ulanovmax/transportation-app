@@ -50,19 +50,25 @@ import RequestCard from "@/components/cards/RequestCard.vue";
 import FilterRequestsForm from "@/components/forms/FilterRequestsForm.vue";
 import RequestModal from "@/components/modals/RequestModal.vue";
 
-import { storeToRefs } from "pinia";
-
 import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
 import type { IRequest } from "@/ts/types/requests";
 
 const { user } = useUserStore();
 
-const { requestsList } = storeToRefs(useRequestsStore());
+const { getUserRequests } = useRequestsStore();
 
-const mainRequestsList = computed(() =>
-	requestsList.value.filter((item) => item.user.id === user.id)
-);
+const userRequests = ref(getUserRequests(user.id));
+
+const mainRequestsList = computed({
+	get() {
+		return userRequests.value;
+	},
+
+	set(list) {
+		userRequests.value = list;
+	},
+});
 
 const isPopupOpen = ref(false);
 const currentRequest = ref({});

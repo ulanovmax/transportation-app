@@ -2,7 +2,6 @@
 	<div ref="searchContainer" class="relative">
 		<app-input
 			v-model="searchValue"
-			debounce
 			:label="label"
 			:placeholder="placeholder"
 			:loading="isLoading"
@@ -52,6 +51,7 @@ import type { InputProps } from "@/components/base/input/types";
 
 import { getCities } from "@/api/get-cities.api.ts";
 import { useClickEvent } from "@/composables/useClickEvent.ts";
+import useDebounce from "@/composables/useDebounce.ts";
 import type { ICity } from "@/ts/types/cities";
 
 interface Emits {
@@ -73,12 +73,7 @@ const isDropdownShow = ref(false);
 const isLoading = ref(false);
 const cities = ref<ICity[]>([]);
 
-const onInput = async () => {
-	if (!searchValue.value) return;
-
-	isLoading.value = true;
-	emits("select", "");
-
+const searchCities = useDebounce(async () => {
 	try {
 		const res = await getCities(searchValue.value);
 
@@ -90,6 +85,16 @@ const onInput = async () => {
 	} finally {
 		isLoading.value = false;
 	}
+}, 500);
+
+const onInput = async () => {
+	if (!searchValue.value) return;
+
+	isLoading.value = true;
+
+	emits("select", "");
+
+	searchCities();
 };
 
 const onSelect = (city: ICity) => {

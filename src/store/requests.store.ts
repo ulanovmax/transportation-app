@@ -15,6 +15,9 @@ export const useRequestsStore = defineStore(
 		const isUserExist = (id: number | string) =>
 			usersList.value.find((item) => item.id === id);
 
+		const getUserRequests = (userId: number) =>
+			requestsList.value.filter((item) => item.user.id === userId);
+
 		const isRequestExist = (id: number | string) =>
 			requestsList.value.find((item) => item.id === id);
 
@@ -38,6 +41,7 @@ export const useRequestsStore = defineStore(
 		return {
 			requestsList,
 			usersList,
+			getUserRequests,
 			isUserExist,
 			isRequestExist,
 			editExistedRequest,

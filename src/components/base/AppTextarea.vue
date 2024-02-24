@@ -37,9 +37,11 @@ const onInput = (textElement: EventTarget | null) => {
 
 	emits("update:modelValue", target.value);
 
+	const scrollHeight = target.scrollHeight;
+
 	if (target.scrollHeight <= 160) {
 		target.style.height = initialTextareaHeight + "px";
-		target.style.height = target.scrollHeight + "px";
+		target.style.height = scrollHeight + "px";
 	}
 };
 
