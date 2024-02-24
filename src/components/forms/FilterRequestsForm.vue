@@ -43,11 +43,16 @@ import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
 import type { IRequest } from "@/ts/types/requests";
 
+interface Props {
+	sortByUser?: boolean;
+}
+
 interface Emits {
 	(e: "change", value: IRequest[]): void;
 }
 
 const emits = defineEmits<Emits>();
+const props = defineProps<Props>();
 
 const dateDispatch = ref("");
 const sortValue = ref<PeriodsEnums | "">("");
@@ -67,15 +72,19 @@ const reset = () => {
 };
 
 const filteredRequests = computed<IRequest[]>(() => {
-	let userRequests = requestsList.value.filter(
-		(item) => item.user.id === user.id
-	);
+	let requests: IRequest[] = requestsList.value;
+
+	if (props.sortByUser) {
+		requests = requestsList.value.filter(
+			(item) => item.user.id === user.id
+		);
+	}
 
 	if (sortValue.value) {
 		const { from, to } = useTimePeriod(sortValue.value);
 
-		userRequests = [
-			...userRequests.filter(
+		requests = [
+			...requests.filter(
 				(item) =>
 					new Date(item.dateCreated) <= new Date(to) &&
 					new Date(item.dateCreated) >= new Date(from)
@@ -84,12 +93,12 @@ const filteredRequests = computed<IRequest[]>(() => {
 	}
 
 	if (dateDispatch.value) {
-		return userRequests.filter(
+		return requests.filter(
 			(request) => request.dateDispatch === dateDispatch.value
 		);
 	}
 
-	return userRequests;
+	return requests;
 });
 </script>
 
