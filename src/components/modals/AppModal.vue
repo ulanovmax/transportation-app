@@ -11,19 +11,28 @@
 				@click.self="close()"
 			>
 				<div
-					class="zoom-in bordered relative flex w-full max-w-5xl flex-col overflow-hidden rounded-md bg-white p-4 text-left shadow-xl"
+					:class="{
+						'max-w-5xl': props.size === 'lg',
+						'max-w-xl': props.size === 'sm',
+					}"
+					class="zoom-in bordered relative flex w-full flex-col overflow-hidden rounded-md bg-white p-4 text-left shadow-xl"
 				>
 					<div
-						class="mb-4 flex items-center justify-between border-b border-solid border-b-slate-200 pb-4"
+						v-if="header"
+						class="mb-4 border-b border-solid border-b-slate-200 pb-4 pt-1"
 					>
-						<slot name="header"></slot>
-
-						<app-button class="ml-auto" size="sm" @click="close">
-							<icon-x :size="20" />
-						</app-button>
+						<slot name="header" :close="close"></slot>
 					</div>
 
-					<slot></slot>
+					<slot :close="close"></slot>
+
+					<app-button
+						class="absolute right-4 top-4"
+						size="sm"
+						@click="close"
+					>
+						<icon-x :size="20" />
+					</app-button>
 				</div>
 			</div>
 		</div>
@@ -43,13 +52,19 @@ import AppButton from "@/components/base/AppButton.vue";
 
 interface Props {
 	modelValue: boolean;
+	size?: "lg" | "sm";
+	header?: boolean;
 }
 
 interface Emits {
 	(e: "update:modelValue", value: boolean): void;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+	size: "lg",
+	header: true,
+});
+
 const emits = defineEmits<Emits>();
 
 const modal = ref();

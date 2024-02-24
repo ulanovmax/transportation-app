@@ -4,13 +4,16 @@
 		:type="type"
 		class="flex items-center gap-3 rounded-md font-semibold text-white transition"
 		:class="{
-			'bg-blue-500': variant === 'default',
+			'bg-blue-500 ': variant === 'default',
 			'px-3 py-2 text-lg': size === 'lg',
 			'gap-2 p-2 text-sm': size === 'sm',
 			'opacity-60': disabled,
 			'hover:bg-blue-700': !disabled,
 			'bg-green-500 hover:bg-green-600': variant === 'success',
 			'disabled:opacity-60': disabled,
+			'border-2 border-solid border-blue-500 bg-transparent !text-blue-500 hover:bg-blue-500 hover:!text-white':
+				variant === 'secondary',
+			'bg-red-500 text-white hover:bg-red-600': variant === 'error',
 		}"
 		@click="emits('click')"
 	>

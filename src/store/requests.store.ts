@@ -12,9 +12,6 @@ export const useRequestsStore = defineStore(
 		const requestsList = ref<IRequest[]>([]);
 		const usersList = ref<IUser[]>([]);
 
-		const getUserRequests = (userId: number) =>
-			requestsList.value.filter((item) => item.user.id === userId);
-
 		const isUserExist = (id: number | string) =>
 			usersList.value.find((item) => item.id === id);
 
@@ -22,7 +19,7 @@ export const useRequestsStore = defineStore(
 			requestsList.value.find((item) => item.id === id);
 
 		const editExistedRequest = (
-			requestId: string,
+			requestId: IRequest["id"],
 			body: OrderForm | DeliveryForm
 		) => {
 			requestsList.value.forEach((item) => {
@@ -32,13 +29,19 @@ export const useRequestsStore = defineStore(
 			});
 		};
 
+		const deleteRequest = (requestId: IRequest["id"]) => {
+			requestsList.value = requestsList.value.filter(
+				(item) => item.id !== requestId
+			);
+		};
+
 		return {
 			requestsList,
 			usersList,
 			isUserExist,
 			isRequestExist,
-			getUserRequests,
 			editExistedRequest,
+			deleteRequest,
 		};
 	},
 	{

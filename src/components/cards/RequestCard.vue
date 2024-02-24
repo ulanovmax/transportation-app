@@ -1,8 +1,8 @@
 <template>
 	<div
-		class="card rounded-lg bg-white shadow-lg transition-shadow hover:shadow-2xl"
+		class="rounded-lg bg-white shadow-lg transition-shadow hover:shadow-2xl"
 	>
-		<div class="relative flex h-full flex-col">
+		<div class="card relative flex h-full flex-col">
 			<div
 				class="flex items-center justify-between gap-4 rounded-t-lg bg-blue-500 p-3 text-white"
 			>
@@ -99,9 +99,16 @@
 		</div>
 
 		<edit-request-modal
-			v-if="isEditOpen"
+			v-if="editable && isEditOpen"
 			v-model="isEditOpen"
 			:data="data"
+		/>
+
+		<delete-request-modal
+			v-model="isDeleteOpen"
+			:to-city="data.toCity"
+			:from-city="data.fromCity"
+			@delete="onDelete()"
 		/>
 	</div>
 </template>
@@ -123,17 +130,23 @@ const ActionsButton = defineAsyncComponent(
 	() => import("@/components/actions-button/ActionsButton.vue")
 );
 
+import { useToast } from "vue-toastification";
+
 import type { ActionOption } from "@/components/actions-button/types";
 import AppBadge from "@/components/base/AppBadge.vue";
 import AppButton from "@/components/base/AppButton.vue";
+import DeleteRequestModal from "@/components/modals/DeleteRequestModal.vue";
 import EditRequestModal from "@/components/modals/EditRequestModal.vue";
 
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
 import { useMatchingRequests } from "@/composables/useMatchingRequests.ts";
 import { useRequestTypeName } from "@/composables/useRequestTypeName.ts";
+import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
 import type { IRequest } from "@/ts/types/requests";
+
+const toast = useToast();
 
 interface Props {
 	data: IRequest;
@@ -149,8 +162,10 @@ const emits = defineEmits<Emits>();
 const props = defineProps<Props>();
 
 const { user } = useUserStore();
+const { deleteRequest } = useRequestsStore();
 
 const isEditOpen = ref(false);
+const isDeleteOpen = ref(false);
 const isOwner = computed(() => props.data.user.id === user.id);
 
 const matchingList = computed(() => {
@@ -171,10 +186,17 @@ const options: ActionOption[] = [
 		label: "Delete",
 		icon: IconTrash,
 		click: () => {
-			console.log("delete");
+			isDeleteOpen.value = true;
 		},
 	},
 ];
+
+const onDelete = () => {
+	deleteRequest(props.data.id);
+
+	toast.success("Request is successfully deleted");
+	isDeleteOpen.value = false;
+};
 </script>
 
 <style scoped lang="postcss">

@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { IconPlus } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
@@ -50,15 +50,19 @@ import RequestCard from "@/components/cards/RequestCard.vue";
 import FilterRequestsForm from "@/components/forms/FilterRequestsForm.vue";
 import RequestModal from "@/components/modals/RequestModal.vue";
 
+import { storeToRefs } from "pinia";
+
 import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
 import type { IRequest } from "@/ts/types/requests";
 
 const { user } = useUserStore();
 
-const requestsStore = useRequestsStore();
+const { requestsList } = storeToRefs(useRequestsStore());
 
-const mainRequestsList = ref(requestsStore.getUserRequests(user.id));
+const mainRequestsList = computed(() =>
+	requestsList.value.filter((item) => item.user.id === user.id)
+);
 
 const isPopupOpen = ref(false);
 const currentRequest = ref({});
