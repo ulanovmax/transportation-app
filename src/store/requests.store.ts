@@ -2,6 +2,7 @@ import { ref } from "vue";
 
 import { defineStore } from "pinia";
 
+import type { DeliveryForm, OrderForm } from "@/ts/types/forms";
 import type { IRequest } from "@/ts/types/requests";
 import type { IUser } from "@/ts/types/users";
 
@@ -20,12 +21,24 @@ export const useRequestsStore = defineStore(
 		const isRequestExist = (id: number | string) =>
 			requestsList.value.find((item) => item.id === id);
 
+		const editExistedRequest = (
+			requestId: string,
+			body: OrderForm | DeliveryForm
+		) => {
+			requestsList.value.forEach((item) => {
+				if (item.id === requestId) {
+					Object.assign(item, body);
+				}
+			});
+		};
+
 		return {
 			requestsList,
 			usersList,
 			isUserExist,
 			isRequestExist,
 			getUserRequests,
+			editExistedRequest,
 		};
 	},
 	{

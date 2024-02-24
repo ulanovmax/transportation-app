@@ -86,8 +86,6 @@ import RequestCard from "@/components/cards/RequestCard.vue";
 import FancyCarousel from "@/components/carousel/FancyCarousel.vue";
 import AppModal from "@/components/modals/AppModal.vue";
 
-import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
-
 import { useMatchingRequests } from "@/composables/useMatchingRequests.ts";
 import { useRequestTypeName } from "@/composables/useRequestTypeName.ts";
 import type { IRequest } from "@/ts/types/requests";

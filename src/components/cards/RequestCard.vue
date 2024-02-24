@@ -97,11 +97,17 @@
 				/>
 			</div>
 		</div>
+
+		<edit-request-modal
+			v-if="isEditOpen"
+			v-model="isEditOpen"
+			:data="data"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent, ref } from "vue";
 import {
 	IconBoxSeam,
 	IconCalendarEvent,
@@ -120,6 +126,7 @@ const ActionsButton = defineAsyncComponent(
 import type { ActionOption } from "@/components/actions-button/types";
 import AppBadge from "@/components/base/AppBadge.vue";
 import AppButton from "@/components/base/AppButton.vue";
+import EditRequestModal from "@/components/modals/EditRequestModal.vue";
 
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
@@ -143,6 +150,7 @@ const props = defineProps<Props>();
 
 const { user } = useUserStore();
 
+const isEditOpen = ref(false);
 const isOwner = computed(() => props.data.user.id === user.id);
 
 const matchingList = computed(() => {
@@ -156,7 +164,7 @@ const options: ActionOption[] = [
 		label: "Edit",
 		icon: IconEdit,
 		click: () => {
-			console.log("edit");
+			isEditOpen.value = true;
 		},
 	},
 	{
@@ -178,8 +186,8 @@ const options: ActionOption[] = [
 	width: 50%;
 	right: -10%;
 	opacity: 0.15;
-	transition: transform 0.5s ease;
-	transform: translateX(0) scaleX(-1);
+	transition: 0.5s ease;
+	transform: translateX(30%) scaleX(-1);
 }
 
 .description {
@@ -199,7 +207,9 @@ const options: ActionOption[] = [
 .card {
 	&:hover {
 		.icon {
-			transform: translateX(30%) scaleX(-1);
+			color: var(--blue);
+			opacity: 0.4;
+			transform: translateX(0) scaleX(-1);
 		}
 	}
 }

@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onUnmounted, ref, watch } from "vue";
 import { IconX } from "@tabler/icons-vue";
 // Plugin to disable scroll in all browsers
 import {
@@ -71,6 +71,8 @@ function close() {
 	emits("update:modelValue", false);
 	enablePageScroll();
 }
+
+onUnmounted(() => enablePageScroll());
 </script>
 
 <style scoped lang="postcss">

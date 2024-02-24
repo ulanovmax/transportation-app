@@ -10,6 +10,7 @@
 			'opacity-60': disabled,
 			'hover:bg-blue-700': !disabled,
 			'bg-green-500 hover:bg-green-600': variant === 'success',
+			'disabled:opacity-60': disabled,
 		}"
 		@click="emits('click')"
 	>

@@ -61,12 +61,13 @@ interface Emits {
 interface Props
 	extends Pick<InputProps, "placeholder" | "label" | "error" | "required"> {
 	reset: boolean;
+	defaultValue?: string;
 }
 
 const props = defineProps<Partial<Props>>();
 const emits = defineEmits<Emits>();
 
-const searchValue = ref("");
+const searchValue = ref(props.defaultValue ?? "");
 const searchContainer = ref<HTMLDivElement | null>(null);
 const isDropdownShow = ref(false);
 const isLoading = ref(false);

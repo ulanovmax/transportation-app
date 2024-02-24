@@ -9,7 +9,12 @@
 			<option v-if="placeholder" class="text-slate-400">
 				{{ placeholder }}
 			</option>
-			<option v-for="item in options" :key="item" :value="item">
+			<option
+				v-for="item in options"
+				:key="item"
+				:selected="item === modelValue"
+				:value="item"
+			>
 				{{ item }}
 			</option>
 		</select>
