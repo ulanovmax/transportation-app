@@ -14,6 +14,7 @@
 	</div>
 
 	<filter-requests-form
+		sort-by-user
 		@change="(list: IRequest[]) => (userRequests = list)"
 	/>
 

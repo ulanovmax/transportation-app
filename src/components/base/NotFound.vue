@@ -3,7 +3,7 @@
 		<div class="box mb-3 max-h-72 min-h-40 min-w-40 max-w-72">
 			<img
 				class="h-full w-full select-none object-contain"
-				src="@public/not-found.svg"
+				src="@img/not-found.svg"
 				alt="Not found"
 			/>
 		</div>

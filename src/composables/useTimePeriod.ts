@@ -7,7 +7,6 @@ import {
 	startOfToday,
 	startOfWeek,
 	startOfYear,
-	sub,
 } from "date-fns";
 
 import { PeriodsEnums } from "@/ts/enums/periods.enums";
@@ -27,8 +26,8 @@ export const useTimePeriod = (period: PeriodsEnums) => {
 
 		case PeriodsEnums.Week:
 			return {
-				from: startOfWeek(sub(new Date(), { weeks: 1 })),
-				to: endOfWeek(sub(new Date(), { weeks: 1 })),
+				from: startOfWeek(new Date()),
+				to: endOfWeek(new Date()),
 			};
 
 		case PeriodsEnums.Month:

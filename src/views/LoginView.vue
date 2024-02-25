@@ -45,7 +45,7 @@
 
 			<div class="relative w-1/3 flex-grow bg-blue-600">
 				<img
-					src="@public/login-bg.jpg"
+					src="../../public/images/login-bg.jpg"
 					class="absolute right-0 top-0 h-full w-full object-cover"
 					alt="Background"
 				/>

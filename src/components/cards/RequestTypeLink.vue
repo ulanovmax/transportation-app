@@ -6,12 +6,12 @@
 		<div class="h-96 w-96 overflow-hidden bg-slate-500">
 			<img
 				v-if="type === RequestTypeEnums.Delivery"
-				src="@public/deliver-img.jpg"
+				src="@img/deliver-img.jpg"
 				alt="Delivery"
 			/>
 			<img
 				v-else-if="type === RequestTypeEnums.Order"
-				src="@public/order-img.jpg"
+				src="@img/order-img.jpg"
 				alt="Order"
 			/>
 		</div>

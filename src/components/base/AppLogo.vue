@@ -3,14 +3,14 @@
 		<img
 			v-if="variant === 'white'"
 			class="contain h-full w-full"
-			src="@public/logo-white.svg"
+			src="@img/logo-white.svg"
 			alt="Transportation"
 		/>
 
 		<img
 			v-else
 			class="contain h-full w-full"
-			src="@public/logo.svg"
+			src="@img/logo.svg"
 			alt="Transportation"
 		/>
 	</router-link>

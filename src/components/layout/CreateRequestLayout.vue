@@ -32,7 +32,7 @@
 								params: { id: user.id },
 							}"
 						>
-							<app-button variant="success">
+							<app-button class="h-full" variant="success">
 								Show my requests
 							</app-button>
 						</router-link>

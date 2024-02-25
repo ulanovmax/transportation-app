@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
 		resolve: {
 			alias: {
 				"@": path.resolve(__dirname, "./src"),
-				"@public": path.resolve(__dirname, "./public"),
+				"@img": path.resolve(__dirname, "./public/images"),
 			},
 		},
 
