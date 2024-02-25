@@ -8,25 +8,14 @@
 	</div>
 
 	<div class="mt-5">
-		<template v-if="requests.length > 0">
-			<div class="grid auto-rows-fr grid-cols-2 gap-5">
-				<request-card
-					v-for="card in requests"
-					:key="card.id"
-					:data="card"
-				/>
-			</div>
-		</template>
-
-		<not-found v-else msg="No requests found" />
+		<requests-listing :requests="requests" />
 	</div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 
-import NotFound from "@/components/base/NotFound.vue";
-import RequestCard from "@/components/cards/RequestCard.vue";
+import RequestsListing from "@/components/cards/RequestsListing.vue";
 import FilterRequestsForm from "@/components/forms/FilterRequestsForm.vue";
 
 import { storeToRefs } from "pinia";

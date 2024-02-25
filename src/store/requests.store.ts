@@ -12,13 +12,13 @@ export const useRequestsStore = defineStore(
 		const requestsList = ref<IRequest[]>([]);
 		const usersList = ref<IUser[]>([]);
 
-		const isUserExist = (id: number | string) =>
+		const isUserExist = (id: IUser["id"]) =>
 			usersList.value.find((item) => item.id === id);
 
-		const getUserRequests = (userId: number) =>
+		const getUserRequests = (userId: IUser["id"]) =>
 			requestsList.value.filter((item) => item.user.id === userId);
 
-		const isRequestExist = (id: number | string) =>
+		const isRequestExist = (id: IRequest["id"]) =>
 			requestsList.value.find((item) => item.id === id);
 
 		const editExistedRequest = (

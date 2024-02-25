@@ -21,20 +21,11 @@
 	<div>
 		<h3 class="mb-5 text-lg">Your requests ({{ userRequests.length }})</h3>
 
-		<template v-if="userRequests.length > 0">
-			<div class="grid auto-rows-fr grid-cols-2 gap-5 max-md:grid-cols-1">
-				<request-card
-					v-for="card in userRequests"
-					:key="card.id"
-					editable
-					:data="card"
-					@select="select"
-					@delete="onDelete"
-				/>
-			</div>
-		</template>
-
-		<not-found v-else msg="No requests found" />
+		<requests-listing
+			:requests="userRequests"
+			@delete="onDelete"
+			@select="onSelect"
+		/>
 	</div>
 
 	<request-modal v-model="isPopupOpen" :data="currentRequest" />
@@ -45,8 +36,7 @@ import { ref } from "vue";
 import { IconPlus } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
-import NotFound from "@/components/base/NotFound.vue";
-import RequestCard from "@/components/cards/RequestCard.vue";
+import RequestsListing from "@/components/cards/RequestsListing.vue";
 import FilterRequestsForm from "@/components/forms/FilterRequestsForm.vue";
 import RequestModal from "@/components/modals/RequestModal.vue";
 
@@ -67,7 +57,7 @@ const onDelete = (id: IRequest["id"]) => {
 	userRequests.value = userRequests.value.filter((item) => item.id !== id);
 };
 
-const select = (request: IRequest) => {
+const onSelect = (request: IRequest) => {
 	currentRequest.value = request;
 	isPopupOpen.value = true;
 };

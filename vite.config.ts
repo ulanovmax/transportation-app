@@ -1,5 +1,5 @@
 import eslintPlugin from "@nabla/vite-plugin-eslint";
-import vue3 from "@vitejs/plugin-vue";
+import vue from "@vitejs/plugin-vue";
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
 
@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), "");
 
 	return {
-		plugins: [vue3(), eslintPlugin()],
+		plugins: [vue(), eslintPlugin()],
 
 		// base: "/transportation-app/",
 
