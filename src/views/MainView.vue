@@ -1,7 +1,7 @@
 <template>
 	<app-header class="mb-10" />
 
-	<main class="pb-10">
+	<main class="flex-grow pb-10">
 		<div class="container">
 			<router-view></router-view>
 		</div>

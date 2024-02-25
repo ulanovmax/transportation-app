@@ -6,7 +6,7 @@
 		<p class="text-lg">Choose type of your request 👇</p>
 	</div>
 
-	<div class="zoom-in flex justify-center gap-5">
+	<div class="zoom-in max-xs:flex-col flex justify-center gap-5">
 		<request-type-link
 			title="Order"
 			:to="{ name: 'createOrder', params: { id: user.id } }"

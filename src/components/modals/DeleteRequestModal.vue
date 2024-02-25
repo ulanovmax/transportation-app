@@ -1,19 +1,21 @@
 <template>
-	<app-modal v-model="isOpen" size="sm" :header="false">
+	<app-modal v-model="isOpen" size="sm" :close-button="false" :header="false">
 		<template #default="{ close }">
 			<div class="flex flex-col items-center pb-3 pt-5">
-				<h2 class="mb-5 text-center text-xl">
+				<h2 class="mb-5 text-center text-xl max-sm:mb-3 max-sm:text-lg">
 					Are you sure you want to delete?
 				</h2>
 
-				<div class="mb-8 flex items-center gap-2 text-slate-400">
-					<h3 class="text-lg">
+				<div
+					class="mb-8 flex items-center gap-2 text-slate-400 max-sm:mb-5"
+				>
+					<h3 class="text-lg max-sm:text-base">
 						{{ fromCity }}
 					</h3>
 
 					<icon-truck-delivery />
 
-					<h3 class="text-lg">
+					<h3 class="text-lg max-sm:text-base">
 						{{ toCity }}
 					</h3>
 				</div>

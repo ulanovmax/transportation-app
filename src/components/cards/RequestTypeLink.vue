@@ -1,9 +1,9 @@
 <template>
 	<router-link
 		:to="to"
-		class="card-type bordered cursor-pointer overflow-hidden rounded-md shadow-lg"
+		class="card-type bordered max-xs:max-w-full w-full max-w-96 cursor-pointer overflow-hidden rounded-md shadow-lg"
 	>
-		<div class="h-96 w-96 overflow-hidden bg-slate-500">
+		<div class="h-96 w-full overflow-hidden bg-slate-500 max-sm:h-72">
 			<img
 				v-if="type === RequestTypeEnums.Delivery"
 				src="@img/deliver-img.jpg"

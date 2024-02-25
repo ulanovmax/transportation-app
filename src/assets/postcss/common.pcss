@@ -4,6 +4,22 @@ html {
     }
 }
 
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+input[type="date"]
+{
+    display:block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align: left;
+    -ms-text-align-last: left;
+    text-align-last: left;
+}
+
 
 body {
     font-family: var(--font-main);
@@ -51,5 +67,28 @@ h6 {
             left: 0;
             right: auto;
         }
+    }
+}
+
+/* Toast */
+.Vue-Toastification__container {
+    @media screen and (max-width: 600px) {
+        align-items: flex-end;
+    }
+}
+
+.Vue-Toastification__toast {
+    border-radius: 8px !important;
+    align-items: center;
+
+    @media screen and (max-width: 600px) {
+        padding: 12px;
+        width: 90% !important;
+    }
+}
+
+.Vue-Toastification__toast-body {
+    @media screen and (max-width: 600px) {
+        font-size: 14px;
     }
 }

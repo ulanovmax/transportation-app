@@ -19,7 +19,7 @@
 				>
 					<div
 						v-if="header"
-						class="mb-4 border-b border-solid border-b-slate-200 pb-4 pt-1"
+						class="mb-4 border-b border-solid border-b-slate-200 pb-4 pr-11 pt-1"
 					>
 						<slot name="header" :close="close"></slot>
 					</div>
@@ -27,6 +27,7 @@
 					<slot :close="close"></slot>
 
 					<app-button
+						v-if="closeButton"
 						class="absolute right-4 top-4"
 						size="sm"
 						@click="close"
@@ -54,6 +55,7 @@ interface Props {
 	modelValue: boolean;
 	size?: "lg" | "sm";
 	header?: boolean;
+	closeButton?: boolean;
 }
 
 interface Emits {
@@ -63,6 +65,7 @@ interface Emits {
 const props = withDefaults(defineProps<Props>(), {
 	size: "lg",
 	header: true,
+	closeButton: true,
 });
 
 const emits = defineEmits<Emits>();

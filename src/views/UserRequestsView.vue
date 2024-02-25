@@ -23,6 +23,7 @@
 
 		<requests-listing
 			:requests="userRequests"
+			editable
 			@delete="onDelete"
 			@select="onSelect"
 		/>

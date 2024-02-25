@@ -6,6 +6,10 @@ export default {
 			transitionDuration: {
 				DEFAULT: "300ms",
 			},
+
+			screens: {
+				xs: "551px",
+			},
 		},
 	},
 	plugins: [],

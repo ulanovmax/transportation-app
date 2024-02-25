@@ -1,16 +1,18 @@
 <template>
 	<app-modal v-model="isOpen">
 		<template #header>
-			<div class="flex items-center gap-4">
-				<h3 class="text-xl">
-					{{ data.fromCity }}
-				</h3>
+			<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+					<h3 class="text-xl">
+						{{ data.fromCity }}
+					</h3>
 
-				<icon-truck-delivery />
+					<icon-truck-delivery />
 
-				<h3 class="text-xl">
-					{{ data.toCity }}
-				</h3>
+					<h3 class="text-xl">
+						{{ data.toCity }}
+					</h3>
+				</div>
 
 				<app-badge class="capitalize text-white">
 					{{ data.type }}
@@ -65,7 +67,7 @@
 				<request-card
 					v-for="card in matchingList"
 					:key="card.id"
-					class="f-carousel__slide !mr-3 !w-1/2"
+					class="f-carousel__slide !mr-3 !w-1/2 max-sm:!w-full"
 					:data="card"
 				/>
 			</fancy-carousel>

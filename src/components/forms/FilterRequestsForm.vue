@@ -1,8 +1,9 @@
 <template>
 	<form class="relative mb-10" @reset="reset">
-		<div class="flex gap-5">
+		<div class="flex flex-wrap gap-5 gap-y-3">
 			<app-input
 				v-model="dateDispatch"
+				:icon="IconCalendarEvent"
 				label="Search by dispatch date"
 				type="date"
 				@update:model-value="emits('change', filteredRequests)"
@@ -30,6 +31,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { IconCalendarEvent } from "@tabler/icons-vue";
 
 import AppSelect from "@/components/base/AppSelect.vue";
 import AppInput from "@/components/base/input/AppInput.vue";

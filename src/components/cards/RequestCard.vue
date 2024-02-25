@@ -4,16 +4,18 @@
 	>
 		<div class="card relative flex h-full flex-col">
 			<div
-				class="flex items-center justify-between gap-4 rounded-t-lg bg-blue-500 p-3 text-white"
+				class="flex items-start justify-between gap-4 rounded-t-lg bg-blue-500 p-3 text-white"
 			>
-				<div class="flex items-center gap-4">
-					<h3 class="text-lg">
+				<div
+					class="flex flex-wrap items-center gap-x-4 gap-y-2 self-center max-sm:gap-2"
+				>
+					<h3 class="text-lg max-sm:text-base">
 						{{ data.fromCity }}
 					</h3>
 
-					<icon-truck-delivery />
+					<icon-truck-delivery class="max-sm:h-5 max-sm:w-5" />
 
-					<h3 class="text-lg">
+					<h3 class="text-lg max-sm:text-base">
 						{{ data.toCity }}
 					</h3>
 				</div>

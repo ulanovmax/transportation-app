@@ -4,7 +4,8 @@
 			class="mb-5 grid gap-4"
 			:class="{
 				'grid-cols-1': type === RequestTypeEnums.Delivery,
-				'grid-cols-2': type === RequestTypeEnums.Order,
+				'max-xs:grid-cols-1 grid-cols-2':
+					type === RequestTypeEnums.Order,
 			}"
 		>
 			<search-cities-input
@@ -40,6 +41,7 @@
 			<app-input
 				v-model="dateDispatch"
 				label="Select dispatch date"
+				:icon="IconCalendarEvent"
 				type="date"
 				:error="errors.dateDispatch"
 				required
@@ -63,6 +65,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { IconCalendarEvent } from "@tabler/icons-vue";
 import { useForm } from "vee-validate";
 import type { ObjectSchema } from "yup";
 
@@ -96,7 +99,8 @@ const { defaultValues } = props;
 const initialValues: OrderForm = {
 	fromCity: defaultValues?.fromCity ?? "",
 	toCity: defaultValues?.toCity ?? "",
-	dateDispatch: defaultValues?.dateDispatch ?? "",
+	dateDispatch:
+		defaultValues?.dateDispatch ?? new Date().toISOString().split("T")[0],
 	description: defaultValues?.description ?? "",
 	category: defaultValues?.category ?? "",
 };

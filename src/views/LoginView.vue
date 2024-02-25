@@ -1,14 +1,14 @@
 <template>
 	<main>
 		<div class="flex min-h-screen w-full">
-			<div class="w-1/2 flex-grow py-8">
-				<div class="container">
-					<app-logo class="mb-20" />
+			<div class="flex w-1/2 flex-grow items-center py-20 max-lg:w-full">
+				<div class="container w-full">
+					<app-logo class="absolute top-5" />
 
 					<div class="mx-auto max-w-xl">
 						<div class="mb-5">
 							<h1 class="mb-2 text-2xl">
-								Welcome to the Transportation 👋
+								Welcome to the <span>Transportation 👋</span>
 							</h1>
 							<p>Please tell me your name</p>
 						</div>
@@ -43,9 +43,9 @@
 				</div>
 			</div>
 
-			<div class="relative w-1/3 flex-grow bg-blue-600">
+			<div class="relative w-1/3 flex-grow bg-blue-600 max-lg:hidden">
 				<img
-					src="../../public/images/login-bg.jpg"
+					src="@img/login-bg.jpg"
 					class="absolute right-0 top-0 h-full w-full object-cover"
 					alt="Background"
 				/>
