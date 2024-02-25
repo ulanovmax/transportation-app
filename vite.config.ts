@@ -1,15 +1,16 @@
 import eslintPlugin from "@nabla/vite-plugin-eslint";
-import vue from "@vitejs/plugin-vue";
+import vue3 from "@vitejs/plugin-vue";
 import path from "path";
-import postcssNesting from "postcss-nesting";
 import { defineConfig, loadEnv } from "vite";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), "");
 
 	return {
-		plugins: [vue(), eslintPlugin()],
+		plugins: [vue3(), eslintPlugin()],
+
+		// base: "/transportation-app/",
 
 		build: {
 			sourcemap: true,
