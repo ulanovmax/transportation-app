@@ -32,6 +32,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "./tailwind.config.ts",
+    "./postcss.config.js",
     "./vue-shim.d.ts",
     "./vite.config.ts"
   ],

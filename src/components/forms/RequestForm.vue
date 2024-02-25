@@ -1,9 +1,10 @@
 <template>
 	<form @submit.prevent="onSubmit">
 		<div
-			class="mb-5 grid grid-cols-2 gap-4"
+			class="mb-5 grid gap-4"
 			:class="{
 				'grid-cols-1': type === RequestTypeEnums.Delivery,
+				'grid-cols-2': type === RequestTypeEnums.Order,
 			}"
 		>
 			<search-cities-input

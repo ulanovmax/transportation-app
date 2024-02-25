@@ -17,7 +17,7 @@ export default {
 			return { name: "userRequests", params: { id: user.id } };
 		}
 
-		return false;
+		return { name: "login" };
 	},
 
 	children: [

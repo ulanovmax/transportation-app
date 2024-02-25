@@ -2,31 +2,42 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import baseRoute from "@/router/routes/base.route.ts";
 import loginRoute from "@/router/routes/login.route.ts";
+import notFoundRoute from "@/router/routes/notFound.route.ts";
 import { useUserStore } from "@/store/user.store.ts";
 
-const routes = [baseRoute, loginRoute];
+const routes = [baseRoute, loginRoute, notFoundRoute];
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
 	const { user } = useUserStore();
 
+	// If user id not found
 	if (!user.id) {
 		if (to.name === "login") {
-			next();
+			return;
 		} else {
-			next({ name: "login" });
+			return { name: "login" };
 		}
-	} else {
-		if (to.params.id && to.params.id !== user.id.toString()) {
-			next({ name: from.name });
+
+		// If user id exist
+	} else if (to.params.id) {
+		// If param id is not the same as user id
+		if (to.params.id !== user.id.toString()) {
+			return { name: from.name, params: { id: from.params.id } };
 		} else {
-			next();
+			return;
 		}
+
+		// If user logged in
+	} else if (to.name === "login") {
+		return { name: from.name };
 	}
+
+	return;
 });
 
 export default router;
