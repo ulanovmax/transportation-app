@@ -1,6 +1,10 @@
 <template>
 	<template v-if="requests.length > 0">
-		<div class="grid auto-rows-fr grid-cols-2 gap-5 max-md:grid-cols-1">
+		<transition-group
+			name="list"
+			tag="div"
+			class="slide-up grid auto-rows-fr grid-cols-2 gap-5 max-md:grid-cols-1"
+		>
 			<request-card
 				v-for="card in requests"
 				:key="card.id"
@@ -9,7 +13,7 @@
 				@select="onSelect"
 				@delete="emits('delete', card.id)"
 			/>
-		</div>
+		</transition-group>
 	</template>
 
 	<not-found v-else msg="No requests found" />
@@ -55,4 +59,12 @@ const onSelect = (request: IRequest) => {
 };
 </script>
 
-<style scoped lang="postcss"></style>
+<style scoped lang="postcss">
+.list-enter-active {
+	transition: all 0.4s ease;
+}
+.list-enter-from {
+	opacity: 0;
+	transform: translateY(30px);
+}
+</style>
