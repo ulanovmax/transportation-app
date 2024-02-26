@@ -1,5 +1,3 @@
-import { string } from "yup";
-
 import type { IRequest } from "@/ts/types/requests";
 
 export interface OrderForm
@@ -7,3 +5,8 @@ export interface OrderForm
 
 export interface DeliveryForm
 	extends Omit<OrderForm, "description" | "category"> {}
+
+export interface LoginForm {
+	name: string;
+	id: number | string;
+}

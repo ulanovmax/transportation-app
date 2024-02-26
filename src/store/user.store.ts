@@ -15,6 +15,8 @@ export const useUserStore = defineStore(
 
 		const user = ref<IUser>({ ...initialUser });
 
+		const usersList = ref<IUser[]>([]);
+
 		// Logout function
 		const logout = () => {
 			user.value = { ...initialUser };
@@ -24,12 +26,13 @@ export const useUserStore = defineStore(
 
 		return {
 			user,
+			usersList,
 			logout,
 		};
 	},
 	{
 		persist: {
-			paths: ["user.id", "user.name"],
+			paths: ["user.id", "user.name", "usersList"],
 		},
 	}
 );

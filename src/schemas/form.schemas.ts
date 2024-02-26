@@ -1,7 +1,7 @@
 import type { ObjectSchema } from "yup";
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 
-import type { DeliveryForm, OrderForm } from "@/ts/types/forms";
+import type { DeliveryForm, LoginForm, OrderForm } from "@/ts/types/forms";
 
 export const deliverySchema: ObjectSchema<DeliveryForm> = object({
 	fromCity: string().required("Please select city"),
@@ -15,4 +15,16 @@ export const orderSchema: ObjectSchema<OrderForm> = object({
 	dateDispatch: string().required("Please select date"),
 	category: string().required("Please select category"),
 	description: string().optional(),
+});
+
+export const loginSchema: ObjectSchema<LoginForm> = object({
+	name: string()
+		.required("Please enter your name")
+		.max(50)
+		.matches(/[a-zA-Zа-яА-Я]/, "Name must contain letters"),
+	id: number()
+		.typeError("ID must be a number")
+		.positive()
+		.integer("ID must be an integer")
+		.required("Please enter id"),
 });

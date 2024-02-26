@@ -64,9 +64,6 @@
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";
-import type { ObjectSchema } from "yup";
-import { number } from "yup";
-import { object, string } from "yup";
 
 import AppButton from "@/components/base/AppButton.vue";
 import AppLogo from "@/components/base/AppLogo.vue";
@@ -74,29 +71,18 @@ import AppInput from "@/components/base/input/AppInput.vue";
 
 import { storeToRefs } from "pinia";
 
+import { loginSchema } from "@/schemas/form.schemas.ts";
 import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
+import type { LoginForm } from "@/ts/types/forms";
 
-const { user } = storeToRefs(useUserStore());
-const { usersList, isUserExist } = useRequestsStore();
+const { user, usersList } = storeToRefs(useUserStore());
+const { isUserExist } = useRequestsStore();
 
 const router = useRouter();
 
-interface LoginForm {
-	name: string;
-	id: number | string;
-}
-
-const schema: ObjectSchema<LoginForm> = object({
-	name: string().required("Please enter your name"),
-	id: number()
-		.typeError("ID must be a number")
-		.positive()
-		.required("Please enter id"),
-});
-
 const { handleSubmit, errors, defineField } = useForm<LoginForm>({
-	validationSchema: schema,
+	validationSchema: loginSchema,
 	initialValues: {
 		name: "",
 		id: "",
@@ -111,11 +97,11 @@ const isDisabled = computed(() => !name.value || !id.value);
 const onSubmit = handleSubmit((values) => {
 	user.value = {
 		name: values.name,
-		id: values.id,
+		id: +values.id,
 	};
 
-	if (!isUserExist(values.id)) {
-		usersList.push(user.value);
+	if (!isUserExist(usersList.value, +values.id)) {
+		usersList.value.push(user.value);
 	}
 
 	void router.replace({ name: "userRequests", params: { id: values.id } });

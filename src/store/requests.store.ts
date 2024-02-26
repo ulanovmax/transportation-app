@@ -10,10 +10,10 @@ export const useRequestsStore = defineStore(
 	"requests",
 	() => {
 		const requestsList = ref<IRequest[]>([]);
-		const usersList = ref<IUser[]>([]);
 
-		const isUserExist = (id: IUser["id"]) =>
-			usersList.value.find((item) => item.id === id);
+		const isUserExist = (usersList: IUser[], id: IUser["id"]) => {
+			return usersList.find((item) => item.id === id);
+		};
 
 		const getUserRequests = (userId: IUser["id"]) =>
 			requestsList.value.filter((item) => item.user.id === userId);
@@ -40,7 +40,6 @@ export const useRequestsStore = defineStore(
 
 		return {
 			requestsList,
-			usersList,
 			getUserRequests,
 			isUserExist,
 			isRequestExist,
