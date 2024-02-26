@@ -25,27 +25,17 @@
 			:requests="userRequests"
 			editable
 			@delete="onDelete"
-			@select="onSelect"
 		/>
 	</div>
-
-	<request-modal
-		v-if="isPopupOpen"
-		v-model="isPopupOpen"
-		:data="currentRequest"
-	/>
 </template>
 
 <script setup lang="ts">
-import { type Component, defineAsyncComponent, ref } from "vue";
+import { ref } from "vue";
 import { IconPlus } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
 import RequestsListing from "@/components/cards/RequestsListing.vue";
 import FilterRequestsForm from "@/components/forms/FilterRequestsForm.vue";
-const RequestModal: Component = defineAsyncComponent(
-	() => import("@/components/modals/RequestModal.vue")
-);
 
 import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
@@ -57,16 +47,8 @@ const requestsStore = useRequestsStore();
 
 const userRequests = ref(requestsStore.getUserRequests(user.id));
 
-const isPopupOpen = ref(false);
-const currentRequest = ref({});
-
 const onDelete = (id: IRequest["id"]) => {
 	userRequests.value = userRequests.value.filter((item) => item.id !== id);
-};
-
-const onSelect = (request: IRequest) => {
-	currentRequest.value = request;
-	isPopupOpen.value = true;
 };
 </script>
 

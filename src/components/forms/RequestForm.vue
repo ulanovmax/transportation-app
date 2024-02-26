@@ -149,7 +149,7 @@ const toast = useToast();
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
 	if (values.fromCity === values.toCity) {
-		toast.error("The cities cannot not be the same");
+		toast.error("The cities cannot be the same");
 
 		return;
 	}

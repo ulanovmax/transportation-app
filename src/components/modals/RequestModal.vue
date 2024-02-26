@@ -67,6 +67,7 @@
 				<request-card
 					v-for="card in matchingList"
 					:key="card.id"
+					:clickable="false"
 					class="f-carousel__slide !mr-3 !w-1/2 max-sm:!w-full"
 					:data="card"
 				/>

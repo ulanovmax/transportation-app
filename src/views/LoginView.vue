@@ -16,7 +16,7 @@
 						<form @submit.prevent="onSubmit">
 							<div class="flex flex-col gap-5">
 								<app-input
-									v-model="name"
+									v-model.trim="name"
 									label="Name"
 									placeholder="Will Smith"
 									:error="errors.name"
@@ -80,13 +80,15 @@ const { user, usersList } = storeToRefs(userStore);
 
 const router = useRouter();
 
-const { handleSubmit, errors, defineField } = useForm<LoginForm>({
-	validationSchema: loginSchema,
-	initialValues: {
-		name: "",
-		id: "",
-	},
-});
+const { handleSubmit, errors, defineField, setFieldError } = useForm<LoginForm>(
+	{
+		validationSchema: loginSchema,
+		initialValues: {
+			name: "",
+			id: "",
+		},
+	}
+);
 
 const [name] = defineField("name");
 const [id] = defineField("id");
@@ -94,12 +96,19 @@ const [id] = defineField("id");
 const isDisabled = computed(() => !name.value || !id.value);
 
 const onSubmit = handleSubmit((values) => {
+	const foundedUser = userStore.isUserExist(+values.id);
+
+	if (foundedUser && foundedUser.name !== values.name) {
+		setFieldError("name", "Incorrect name with this id");
+		return;
+	}
+
 	user.value = {
 		name: values.name,
 		id: +values.id,
 	};
 
-	if (!userStore.isUserExist(+values.id)) {
+	if (!foundedUser) {
 		usersList.value.push(user.value);
 	}
 

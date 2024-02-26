@@ -8,7 +8,7 @@
 	</div>
 
 	<div class="mt-5">
-		<requests-listing :requests="requests" />
+		<requests-listing :requests="requests" @delete="onDelete" />
 	</div>
 </template>
 
@@ -26,6 +26,10 @@ import type { IRequest } from "@/ts/types/requests";
 const { requestsList } = storeToRefs(useRequestsStore());
 
 const requests = ref(requestsList.value);
+
+const onDelete = (id: IRequest["id"]) => {
+	requests.value = requests.value.filter((item) => item.id !== id);
+};
 </script>
 
 <style scoped lang="postcss"></style>

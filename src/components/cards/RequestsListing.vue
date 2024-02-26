@@ -6,29 +6,53 @@
 				:key="card.id"
 				:editable="editable"
 				:data="card"
-				@select="(item: IRequest) => emits('select', item)"
-				@delete="(id: IRequest['id']) => emits('delete', id)"
+				@select="onSelect"
+				@delete="emits('delete', card.id)"
 			/>
 		</div>
 	</template>
 
 	<not-found v-else msg="No requests found" />
+
+	<request-modal
+		v-if="isPopupOpen"
+		v-model="isPopupOpen"
+		:data="currentRequest"
+	/>
 </template>
 
 <script setup lang="ts">
+import type { Component } from "vue";
+import { ref } from "vue";
+import { defineAsyncComponent } from "vue";
+
 import NotFound from "@/components/base/NotFound.vue";
 import RequestCard from "@/components/cards/RequestCard.vue";
-import type { CardEmits } from "@/components/cards/types";
 
 import type { IRequest } from "@/ts/types/requests";
+const RequestModal: Component = defineAsyncComponent(
+	() => import("@/components/modals/RequestModal.vue")
+);
+
 interface Props {
 	requests: IRequest[];
 	editable?: boolean;
 }
 
-const emits = defineEmits<CardEmits>();
+interface Emits {
+	(e: "delete", value: IRequest["id"]): void;
+}
 
 defineProps<Props>();
+const emits = defineEmits<Emits>();
+
+const isPopupOpen = ref(false);
+const currentRequest = ref({});
+
+const onSelect = (request: IRequest) => {
+	currentRequest.value = request;
+	isPopupOpen.value = true;
+};
 </script>
 
 <style scoped lang="postcss"></style>

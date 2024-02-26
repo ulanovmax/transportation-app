@@ -81,7 +81,7 @@
 					{{ data.description ? data.description : "No description" }}
 				</p>
 
-				<div v-if="editable" class="mt-auto flex gap-3">
+				<div v-if="clickable" class="mt-auto flex gap-3">
 					<app-button size="sm" @click="emits('select', data)">
 						Show more
 					</app-button>
@@ -159,11 +159,14 @@ const toast = useToast();
 interface Props {
 	data: IRequest;
 	editable?: boolean;
+	clickable?: boolean;
 }
 
 const emits = defineEmits<CardEmits>();
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+	clickable: true,
+});
 
 const { user } = useUserStore();
 const { deleteRequest } = useRequestsStore();
