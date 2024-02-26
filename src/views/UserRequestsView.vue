@@ -29,17 +29,23 @@
 		/>
 	</div>
 
-	<request-modal v-model="isPopupOpen" :data="currentRequest" />
+	<request-modal
+		v-if="isPopupOpen"
+		v-model="isPopupOpen"
+		:data="currentRequest"
+	/>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { type Component, defineAsyncComponent, ref } from "vue";
 import { IconPlus } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
 import RequestsListing from "@/components/cards/RequestsListing.vue";
 import FilterRequestsForm from "@/components/forms/FilterRequestsForm.vue";
-import RequestModal from "@/components/modals/RequestModal.vue";
+const RequestModal: Component = defineAsyncComponent(
+	() => import("@/components/modals/RequestModal.vue")
+);
 
 import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";

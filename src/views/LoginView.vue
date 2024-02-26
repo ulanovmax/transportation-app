@@ -24,7 +24,7 @@
 								/>
 
 								<app-input
-									v-model.number="id"
+									v-model="id"
 									label="Id"
 									:error="errors.id"
 									placeholder="12345"
@@ -32,6 +32,7 @@
 								/>
 
 								<app-button
+									:disabled="isDisabled"
 									class="justify-center"
 									type="submit"
 								>
@@ -60,6 +61,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useForm } from "vee-validate";
 import type { ObjectSchema } from "yup";
@@ -103,6 +105,8 @@ const { handleSubmit, errors, defineField } = useForm<LoginForm>({
 
 const [name] = defineField("name");
 const [id] = defineField("id");
+
+const isDisabled = computed(() => !name.value || !id.value);
 
 const onSubmit = handleSubmit((values) => {
 	user.value = {

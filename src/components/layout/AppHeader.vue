@@ -4,7 +4,11 @@
 			<div class="container flex items-center justify-between">
 				<app-logo />
 
-				<app-button :icon="IconLogout" size="sm" @click="logout">
+				<app-button
+					:icon="IconLogout"
+					size="sm"
+					@click="isAlertOpen = true"
+				>
 					Logout
 				</app-button>
 			</div>
@@ -26,19 +30,55 @@
 				</ul>
 			</div>
 		</nav>
+
+		<app-modal
+			v-if="isAlertOpen"
+			v-model="isAlertOpen"
+			size="sm"
+			:close-button="false"
+			:header="false"
+		>
+			<template #default="{ close }">
+				<div class="flex flex-col items-center pb-3 pt-5">
+					<h2
+						class="mb-5 text-center text-xl max-sm:mb-3 max-sm:text-lg"
+					>
+						Are you sure you want to logout?
+					</h2>
+
+					<div class="flex gap-4">
+						<app-button variant="secondary" @click="close">
+							Cancel
+						</app-button>
+
+						<app-button variant="error" @click="logout">
+							Logout
+						</app-button>
+					</div>
+				</div>
+			</template>
+		</app-modal>
 	</header>
 </template>
 
 <script setup lang="ts">
+import type { Component } from "vue";
+import { defineAsyncComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { IconLogout } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
 import AppLogo from "@/components/base/AppLogo.vue";
 
+const AppModal: Component = defineAsyncComponent(
+	() => import("@/components/modals/AppModal.vue")
+);
+
 import { useUserStore } from "@/store/user.store.ts";
 
 const { logout, user } = useUserStore();
+
+const isAlertOpen = ref(false);
 
 const route = useRoute();
 </script>

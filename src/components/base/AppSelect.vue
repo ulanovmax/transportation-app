@@ -1,5 +1,5 @@
 <template>
-	<div class="">
+	<div>
 		<label v-if="label" class="mb-2 text-base font-semibold">
 			{{ label }}
 			<span v-if="required" class="text-red-500">*</span>
@@ -18,6 +18,10 @@
 				{{ item }}
 			</option>
 		</select>
+
+		<p v-show="error" class="error mt-2 text-red-500 transition">
+			{{ error }}
+		</p>
 	</div>
 </template>
 
@@ -28,6 +32,7 @@ interface Props {
 	label?: string;
 	required?: boolean;
 	placeholder?: string;
+	error?: string;
 }
 
 interface Emits {

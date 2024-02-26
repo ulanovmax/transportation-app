@@ -72,18 +72,4 @@ const onInput = (e: Event) => {
 .icon {
 	@apply pointer-events-none absolute top-1/2 -translate-y-1/2;
 }
-
-.error {
-	animation: show 0.3s ease;
-}
-
-@keyframes show {
-	0% {
-		transform: translateY(-10px);
-	}
-
-	100% {
-		transform: translateY(0);
-	}
-}
 </style>

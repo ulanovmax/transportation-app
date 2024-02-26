@@ -107,6 +107,7 @@
 		/>
 
 		<delete-request-modal
+			v-if="isDeleteOpen"
 			v-model="isDeleteOpen"
 			:to-city="data.toCity"
 			:from-city="data.fromCity"
@@ -116,7 +117,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref } from "vue";
+import { type Component, computed, defineAsyncComponent, ref } from "vue";
 import {
 	IconBoxSeam,
 	IconCalendarEvent,
@@ -128,8 +129,14 @@ import {
 	IconUsersGroup,
 } from "@tabler/icons-vue";
 
-const ActionsButton = defineAsyncComponent(
+const ActionsButton: Component = defineAsyncComponent(
 	() => import("@/components/actions-button/ActionsButton.vue")
+);
+const EditRequestModal: Component = defineAsyncComponent(
+	() => import("@/components/modals/EditRequestModal.vue")
+);
+const DeleteRequestModal: Component = defineAsyncComponent(
+	() => import("@/components/modals/DeleteRequestModal.vue")
 );
 
 import { useToast } from "vue-toastification";
@@ -137,8 +144,6 @@ import { useToast } from "vue-toastification";
 import type { ActionOption } from "@/components/actions-button/types";
 import AppBadge from "@/components/base/AppBadge.vue";
 import AppButton from "@/components/base/AppButton.vue";
-import DeleteRequestModal from "@/components/modals/DeleteRequestModal.vue";
-import EditRequestModal from "@/components/modals/EditRequestModal.vue";
 
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
