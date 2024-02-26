@@ -4,7 +4,7 @@
 			class="mb-5 grid gap-4"
 			:class="{
 				'grid-cols-1': type === RequestTypeEnums.Delivery,
-				'max-xs:grid-cols-1 grid-cols-2':
+				'grid-cols-2 max-xs:grid-cols-1':
 					type === RequestTypeEnums.Order,
 			}"
 		>
@@ -64,8 +64,10 @@
 </template>
 
 <script setup lang="ts">
+import type { Ref } from "vue";
 import { computed, ref } from "vue";
 import { IconCalendarEvent } from "@tabler/icons-vue";
+import type { BaseFieldProps, GenericObject } from "vee-validate";
 import { useForm } from "vee-validate";
 import type { ObjectSchema } from "yup";
 
@@ -90,6 +92,9 @@ interface Props {
 	defaultValues?: OrderForm;
 	buttonLabel: string;
 }
+
+// For validation fields
+type ValidateTuple = [Ref<string>, Ref<BaseFieldProps & GenericObject>];
 
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
@@ -135,8 +140,8 @@ const { handleSubmit, errors, defineField } = useForm<OrderForm>({
 const [fromCity] = defineField("fromCity");
 const [toCity] = defineField("toCity");
 const [dateDispatch] = defineField("dateDispatch");
-const [category] = defineField("category");
-const [description] = defineField("description");
+const [category] = defineField("category") as ValidateTuple;
+const [description] = defineField("description") as ValidateTuple;
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
 	emits("submit", values);

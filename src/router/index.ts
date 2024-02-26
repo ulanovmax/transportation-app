@@ -1,3 +1,4 @@
+import type { RouteLocationRaw } from "vue-router";
 import { createRouter, createWebHistory } from "vue-router";
 
 import baseRoute from "@/router/routes/base.route.ts";
@@ -12,7 +13,7 @@ const router = createRouter({
 	routes,
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from): void | RouteLocationRaw | boolean => {
 	const { user } = useUserStore();
 
 	// If user id not found
@@ -27,14 +28,17 @@ router.beforeEach((to, from) => {
 	} else if (to.params.id) {
 		// If param id is not the same as user id
 		if (to.params.id !== user.id.toString()) {
-			return { name: from.name, params: { id: from.params.id } };
+			return {
+				name: from.name as string,
+				params: { id: from.params.id },
+			};
 		} else {
 			return;
 		}
 
 		// If user logged in
 	} else if (to.name === "login") {
-		return { name: from.name };
+		return { name: from.name as string };
 	}
 
 	return;

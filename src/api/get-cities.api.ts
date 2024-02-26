@@ -9,7 +9,6 @@ export const getCities = async (name: string, limit: number = 10) => {
 			`https://api.api-ninjas.com/v1/city?name=${name}&limit=${limit}`,
 			{
 				headers: {
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 					"X-Api-Key": process.env.CITIES_API_KEY,
 				},
 			}

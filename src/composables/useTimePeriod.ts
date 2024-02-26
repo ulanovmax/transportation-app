@@ -21,7 +21,7 @@ export const useTimePeriod = (period: PeriodsEnums) => {
 		case PeriodsEnums.Day:
 			return {
 				from: startOfToday(),
-				to: endOfToday(new Date()),
+				to: endOfToday(),
 			};
 
 		case PeriodsEnums.Week:

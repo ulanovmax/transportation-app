@@ -19,7 +19,7 @@
 				>
 					<div
 						v-if="header"
-						class="mb-4 border-b border-solid border-b-slate-200 pb-4 pr-11 pt-1"
+						class="mb-4 border-b border-solid border-b-slate-200 pb-4 pr-12 pt-1"
 					>
 						<slot name="header" :close="close"></slot>
 					</div>

@@ -8,8 +8,9 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "ts": "vue-tsc"
   },
   "dependencies": {
     "@fancyapps/ui": "^5.0.33",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@nabla/vite-plugin-eslint": "^2.0.2",
+    "@types/node": "^20.11.20",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "@vitejs/plugin-vue": "^5.0.4",
