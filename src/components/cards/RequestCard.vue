@@ -144,6 +144,7 @@ import { useToast } from "vue-toastification";
 import type { ActionOption } from "@/components/actions-button/types";
 import AppBadge from "@/components/base/AppBadge.vue";
 import AppButton from "@/components/base/AppButton.vue";
+import type { CardEmits } from "@/components/cards/types";
 
 import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
@@ -160,12 +161,7 @@ interface Props {
 	editable?: boolean;
 }
 
-interface Emits {
-	(e: "select", value: IRequest): void;
-	(e: "delete", value: IRequest["id"]): void;
-}
-
-const emits = defineEmits<Emits>();
+const emits = defineEmits<CardEmits>();
 
 const props = defineProps<Props>();
 

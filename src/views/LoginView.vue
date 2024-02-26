@@ -72,12 +72,11 @@ import AppInput from "@/components/base/input/AppInput.vue";
 import { storeToRefs } from "pinia";
 
 import { loginSchema } from "@/schemas/form.schemas.ts";
-import { useRequestsStore } from "@/store/requests.store.ts";
 import { useUserStore } from "@/store/user.store.ts";
 import type { LoginForm } from "@/ts/types/forms";
 
-const { user, usersList } = storeToRefs(useUserStore());
-const { isUserExist } = useRequestsStore();
+const userStore = useUserStore();
+const { user, usersList } = storeToRefs(userStore);
 
 const router = useRouter();
 
@@ -100,7 +99,7 @@ const onSubmit = handleSubmit((values) => {
 		id: +values.id,
 	};
 
-	if (!isUserExist(usersList.value, +values.id)) {
+	if (!userStore.isUserExist(+values.id)) {
 		usersList.value.push(user.value);
 	}
 

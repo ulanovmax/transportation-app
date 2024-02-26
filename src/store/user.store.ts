@@ -8,14 +8,18 @@ import type { IUser } from "@/ts/types/users";
 export const useUserStore = defineStore(
 	"user",
 	() => {
-		const initialUser = {
-			id: "",
+		const initialUser: IUser = {
+			id: 0,
 			name: "",
 		};
 
 		const user = ref<IUser>({ ...initialUser });
 
 		const usersList = ref<IUser[]>([]);
+
+		const isUserExist = (id: IUser["id"]) => {
+			return usersList.value.find((item) => item.id === id);
+		};
 
 		// Logout function
 		const logout = () => {
@@ -27,6 +31,7 @@ export const useUserStore = defineStore(
 		return {
 			user,
 			usersList,
+			isUserExist,
 			logout,
 		};
 	},

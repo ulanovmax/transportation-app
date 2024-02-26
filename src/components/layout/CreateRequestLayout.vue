@@ -1,5 +1,5 @@
 <template>
-	<back-link />
+	<back-link :to="{ name: 'createRequest' }" />
 
 	<div>
 		<div class="mb-10 flex flex-wrap items-center justify-between gap-4">
@@ -13,6 +13,7 @@
 		<slot name="form"></slot>
 	</div>
 
+	<!-- Confirmation modal -->
 	<app-modal v-model="isPopupOpen" size="sm" :header="false">
 		<template #default="{ close }">
 			<div class="pb-5 pt-5">

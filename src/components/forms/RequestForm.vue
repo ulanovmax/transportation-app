@@ -113,6 +113,7 @@ const initialValues: OrderForm = {
 const isDisabled = computed(() => {
 	if (!defaultValues) return;
 
+	// For enable editing
 	const mainCondition =
 		defaultValues.dateDispatch === dateDispatch.value &&
 		defaultValues.fromCity === fromCity.value &&
@@ -145,7 +146,9 @@ const [description] = defineField("description") as ValidateTuple;
 
 const onSubmit = handleSubmit((values, { resetForm }) => {
 	emits("submit", values);
+
 	isReset.value = true;
+
 	resetForm();
 });
 </script>

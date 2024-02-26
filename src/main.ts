@@ -6,7 +6,6 @@ import { createPinia } from "pinia";
 
 // Styles
 import "./assets/tailwind.css";
-import "./assets/reset.css";
 import "vue-toastification/dist/index.css";
 
 import App from "./App.vue";

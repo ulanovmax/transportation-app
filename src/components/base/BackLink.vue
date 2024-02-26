@@ -1,19 +1,21 @@
 <template>
-	<span
+	<router-link
+		:to="to"
 		class="hover-link mb-12 inline-flex items-center gap-2 font-semibold"
-		@click="router.go(-1)"
 	>
 		<icon-arrow-narrow-left class="text-blue-500" />
 
 		<slot> Go back </slot>
-	</span>
+	</router-link>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import type { RouteLocationRaw } from "vue-router";
 import { IconArrowNarrowLeft } from "@tabler/icons-vue";
 
-const router = useRouter();
+withDefaults(defineProps<{ to?: RouteLocationRaw }>(), {
+	to: "/",
+});
 </script>
 
 <style scoped lang="postcss"></style>

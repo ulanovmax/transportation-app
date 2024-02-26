@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import NotFound from "@/components/base/NotFound.vue";
 import RequestCard from "@/components/cards/RequestCard.vue";
+import type { CardEmits } from "@/components/cards/types";
 
 import type { IRequest } from "@/ts/types/requests";
 interface Props {
@@ -25,12 +26,7 @@ interface Props {
 	editable?: boolean;
 }
 
-interface Emits {
-	(e: "select", value: IRequest): void;
-	(e: "delete", value: IRequest["id"]): void;
-}
-
-const emits = defineEmits<Emits>();
+const emits = defineEmits<CardEmits>();
 
 defineProps<Props>();
 </script>
