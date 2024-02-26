@@ -70,20 +70,6 @@
 					class="f-carousel__slide !mr-3 !w-1/2 max-sm:!w-full"
 					:data="card"
 				/>
-
-				<request-card
-					v-for="card in matchingList"
-					:key="card.id"
-					class="f-carousel__slide !mr-3 !w-1/2 max-sm:!w-full"
-					:data="card"
-				/>
-
-				<request-card
-					v-for="card in matchingList"
-					:key="card.id"
-					class="f-carousel__slide !mr-3 !w-1/2 max-sm:!w-full"
-					:data="card"
-				/>
 			</fancy-carousel>
 		</div>
 	</app-modal>

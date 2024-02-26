@@ -66,6 +66,7 @@
 <script setup lang="ts">
 import type { Ref } from "vue";
 import { computed, ref } from "vue";
+import { useToast } from "vue-toastification";
 import { IconCalendarEvent } from "@tabler/icons-vue";
 import type { BaseFieldProps, GenericObject } from "vee-validate";
 import { useForm } from "vee-validate";
@@ -144,7 +145,15 @@ const [dateDispatch] = defineField("dateDispatch");
 const [category] = defineField("category") as ValidateTuple;
 const [description] = defineField("description") as ValidateTuple;
 
+const toast = useToast();
+
 const onSubmit = handleSubmit((values, { resetForm }) => {
+	if (values.fromCity === values.toCity) {
+		toast.error("The cities cannot not be the same");
+
+		return;
+	}
+
 	emits("submit", values);
 
 	isReset.value = true;
