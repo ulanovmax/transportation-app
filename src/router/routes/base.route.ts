@@ -10,6 +10,8 @@ export default {
 	name: "main",
 	component: () => import("@/views/MainView.vue"),
 
+	meta: { requiresAuth: true },
+
 	redirect: () => {
 		const { user } = useUserStore();
 

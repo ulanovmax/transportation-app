@@ -5,5 +5,6 @@ export default {
 
 	meta: {
 		title: "404 - Not found",
+		requiresAuth: true,
 	},
 };
