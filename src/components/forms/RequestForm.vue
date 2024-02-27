@@ -82,6 +82,7 @@ import { RequestTypeEnums } from "@/ts/enums/request-type.enums.ts";
 
 import { orderCategories } from "@/constants/order-categories.ts";
 import { deliverySchema, orderSchema } from "@/schemas/form.schemas.ts";
+import { useRequestsStore } from "@/store/requests.store.ts";
 import type { DeliveryForm, OrderForm } from "@/ts/types/forms";
 
 interface Emits {
@@ -101,6 +102,8 @@ const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
 const { defaultValues } = props;
+
+const { isRequestExist } = useRequestsStore();
 
 const initialValues: OrderForm = {
 	fromCity: defaultValues?.fromCity ?? "",
@@ -150,6 +153,13 @@ const toast = useToast();
 const onSubmit = handleSubmit((values, { resetForm }) => {
 	if (values.fromCity === values.toCity) {
 		toast.error("The cities cannot be the same");
+
+		return;
+	}
+
+	// If request already exist
+	if (isRequestExist(values, props.type)) {
+		toast.error("The request is already exist");
 
 		return;
 	}
