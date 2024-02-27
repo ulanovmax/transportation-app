@@ -16,24 +16,32 @@
 	<!-- Confirmation modal -->
 	<app-modal v-model="isPopupOpen" size="sm" :header="false">
 		<template #default="{ close }">
-			<div class="pb-5 pt-5">
+			<div class="py-5 max-xs:pt-10">
 				<div class="flex flex-col items-center">
 					<h2 class="mb-10 text-center text-xl">
 						Thanks for creating request!
 					</h2>
 
-					<div class="flex gap-4">
-						<app-button variant="secondary" @click="close">
+					<div class="flex flex-wrap items-center gap-4">
+						<app-button
+							class="flex-grow justify-center"
+							variant="secondary"
+							@click="close"
+						>
 							Create another one
 						</app-button>
 
 						<router-link
+							class="flex-grow"
 							:to="{
 								name: 'userRequests',
 								params: { id: user.id },
 							}"
 						>
-							<app-button class="h-full" variant="success">
+							<app-button
+								class="h-full w-full justify-center"
+								variant="success"
+							>
 								Show my requests
 							</app-button>
 						</router-link>
