@@ -15,6 +15,7 @@ export interface InputProps {
 }
 
 export interface InputEmits {
-	(e: "update:modelValue", value: string | number): void;
+	(e: "update:modelValue", value: InputProps["modelValue"]): void;
 	(e: "blur"): void;
+	(e: "enter", value: InputProps["modelValue"]): void;
 }

@@ -29,6 +29,9 @@ export default defineConfig(({ mode }) => {
 
 		define: {
 			"process.env.CITIES_API_KEY": JSON.stringify(env.CITIES_API_KEY),
+			"process.env.SOCKETS_BAY_API_KEY": JSON.stringify(
+				env.SOCKETS_BAY_API_KEY
+			),
 		},
 	};
 });

@@ -27,6 +27,7 @@
 				class="input"
 				@input="onInput($event)"
 				@blur="emits('blur')"
+				@keyup.enter="onEnter($event)"
 			/>
 
 			<dots-loader v-if="loading" class="icon right-4" />
@@ -65,6 +66,12 @@ const onInput = (e: Event) => {
 	} else {
 		emits("update:modelValue", target.value);
 	}
+};
+
+const onEnter = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+
+	emits("enter", target.value);
 };
 </script>
 

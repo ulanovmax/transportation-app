@@ -4,13 +4,23 @@
 			<div class="container flex items-center justify-between">
 				<app-logo />
 
-				<app-button
-					:icon="IconLogout"
-					size="sm"
-					@click="isAlertOpen = true"
-				>
-					Logout
-				</app-button>
+				<div class="flex items-center gap-3">
+					<app-button
+						:icon="IconMessage"
+						variant="success"
+						size="sm"
+						@click="isChatOpen = true"
+					>
+					</app-button>
+
+					<app-button
+						:icon="IconLogout"
+						size="sm"
+						@click="isAlertOpen = true"
+					>
+						Logout
+					</app-button>
+				</div>
 			</div>
 		</div>
 
@@ -58,6 +68,8 @@
 				</div>
 			</template>
 		</app-modal>
+
+		<chat-modal v-if="isChatOpen" v-model="isChatOpen" />
 	</header>
 </template>
 
@@ -65,7 +77,7 @@
 import type { Component } from "vue";
 import { defineAsyncComponent, ref } from "vue";
 import { useRoute } from "vue-router";
-import { IconLogout } from "@tabler/icons-vue";
+import { IconLogout, IconMessage } from "@tabler/icons-vue";
 
 import AppButton from "@/components/base/AppButton.vue";
 import AppLogo from "@/components/base/AppLogo.vue";
@@ -74,11 +86,14 @@ const AppModal: Component = defineAsyncComponent(
 	() => import("@/components/modals/AppModal.vue")
 );
 
+import ChatModal from "@/components/chat/ChatModal.vue";
+
 import { useUserStore } from "@/store/user.store.ts";
 
 const { logout, user } = useUserStore();
 
 const isAlertOpen = ref(false);
+const isChatOpen = ref(false);
 
 const route = useRoute();
 </script>
