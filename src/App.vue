@@ -13,7 +13,7 @@ calcVh();
 
 window.addEventListener("resize", () => calcVh());
 
-console.log("test git")
+console.log("test git 3")
 </script>
 
 <style lang="postcss">
