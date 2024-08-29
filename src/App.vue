@@ -12,6 +12,8 @@ const calcVh = () => {
 calcVh();
 
 window.addEventListener("resize", () => calcVh());
+
+console.log("test git")
 </script>
 
 <style lang="postcss">
